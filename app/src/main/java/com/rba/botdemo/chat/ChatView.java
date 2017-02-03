@@ -5,4 +5,7 @@ package com.rba.botdemo.chat;
  */
 
 public interface ChatView {
+
+    void init();
+
 }

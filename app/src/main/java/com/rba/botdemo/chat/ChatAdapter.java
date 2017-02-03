@@ -1,11 +1,15 @@
 package com.rba.botdemo.chat;
 
 import android.content.Context;
+import android.support.v7.widget.AppCompatTextView;
 import android.support.v7.widget.RecyclerView;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.rba.botdemo.R;
+import com.rba.botdemo.model.entity.MessageEntity;
+import com.rba.botdemo.util.Constant;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -16,19 +20,26 @@ import java.util.List;
 
 public class ChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
-    private final List<Object> objectList;
+    private List<Object> objectList;
     private Context context;
 
-    public ChatAdapter(Context context, List<Object> objectList) {
+    public ChatAdapter(Context context) {
         this.objectList = new ArrayList<>();
+        this.context = context;
     }
 
     @Override
     public int getItemViewType(int position) {
+        if (objectList.get(position) instanceof MessageEntity) {
+            if(((MessageEntity) objectList.get(position)).getType() == 0){
+                return Constant.TAG_MESSAGE_RIGHT;
+            }else{
+                return Constant.TAG_MESSAGE_LETF;
+            }
+
+        }
         /*
-        if (objectList.get(position) instanceof OfferJobResponse.DataBean) {
-            return Constant.TAG_ITEM;
-        } else if (objectList.get(position) instanceof ErrorEntity) {
+        else if (objectList.get(position) instanceof ErrorEntity) {
             return Constant.TAG_ERROR;
         } else if (objectList.get(position) instanceof LoadingEntity) {
             return Constant.TAG_LOADING;
@@ -40,7 +51,16 @@ public class ChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = null;
+        View view;
+
+        if(viewType == Constant.TAG_MESSAGE_LETF){
+            view = LayoutInflater.from(context).inflate(R.layout.item_message_left, parent, false);
+            return new MessageViewHolder(view);
+        }else if(viewType == Constant.TAG_MESSAGE_RIGHT){
+            view = LayoutInflater.from(context).inflate(R.layout.item_message_right, parent, false);
+            return new MessageViewHolder(view);
+        }
+
         /*
         switch (viewType) {
             case Constant.TAG_ITEM:
@@ -56,11 +76,22 @@ public class ChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
                 return null;
         }
         */
-        return new ErrorViewHolder(view);
+        return null;
+    }
+
+    public void addData(List<Object> objectList){
+        this.objectList = objectList;
     }
 
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
+
+        if(objectList.get(position) instanceof MessageEntity){
+            MessageViewHolder messageViewHolder = (MessageViewHolder) holder;
+            MessageEntity messageEntity = (MessageEntity) objectList.get(position);
+            messageViewHolder.lblMessage.setText(messageEntity.getMessage());
+        }
+
         /*
         if (objectList.get(position) instanceof OfferJobResponse.DataBean) {
 
@@ -200,31 +231,15 @@ public class ChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     }
     */
 
-    private class ErrorViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
-        /*
-        final TextView lblError;
-        final Button btnError;
-        */
+    private class MessageViewHolder extends RecyclerView.ViewHolder {
 
-        ErrorViewHolder(View itemView) {
+        final AppCompatTextView lblMessage;
+
+        MessageViewHolder(View itemView) {
             super(itemView);
-            /*
-            lblError = (TextView) itemView.findViewById(R.id.lblError);
-            btnError = (Button) itemView.findViewById(R.id.btnError);
-            btnError.setOnClickListener(this);
-            */
+            lblMessage = (AppCompatTextView) itemView.findViewById(R.id.lblMessage);
         }
 
-        @Override
-        public void onClick(View v) {
-            /*
-            switch (v.getId()) {
-                case R.id.btnError:
-
-                    break;
-            }
-            */
-        }
     }
 
 }

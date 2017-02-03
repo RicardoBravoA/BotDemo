@@ -8,9 +8,9 @@
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:context="com.rba.botdemo.chat.ChatActivity"
     android:orientation="vertical"
+    android:animateLayoutChanges="true"
     tools:showIn="@layout/activity_chat">
 
-    <!--
     <android.support.v7.widget.RecyclerView
         android:id="@+id/rcvChat"
         android:layout_width="match_parent"
@@ -21,6 +21,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:padding="5dp"
+        android:animateLayoutChanges="true"
         android:layout_gravity="bottom"
         android:orientation="horizontal">
 
@@ -41,12 +42,6 @@
 
 
     </LinearLayout>
-    -->
 
-    <com.rba.botdemo.component.chatbutton.ChatButton
-        android:id="@+id/chbGeneral"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"/>
 
 </LinearLayout>
