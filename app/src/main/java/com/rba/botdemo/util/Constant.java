@@ -8,5 +8,6 @@ public class Constant {
 
     public static final int TAG_MESSAGE_LETF = 0;
     public static final int TAG_MESSAGE_RIGHT = 1;
+    public static final int TAG_BUTTON = 2;
 
 }

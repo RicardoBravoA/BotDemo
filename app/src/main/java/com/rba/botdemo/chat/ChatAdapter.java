@@ -8,6 +8,9 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.rba.botdemo.R;
+import com.rba.botdemo.component.chatbutton.ChatButton;
+import com.rba.botdemo.component.chatbutton.ChatButtonOnClick;
+import com.rba.botdemo.model.entity.ChatButtonEntity;
 import com.rba.botdemo.model.entity.MessageEntity;
 import com.rba.botdemo.util.Constant;
 
@@ -22,10 +25,12 @@ public class ChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     private List<Object> objectList;
     private Context context;
+    private ChatView chatView;
 
-    public ChatAdapter(Context context) {
+    public ChatAdapter(Context context, ChatView chatView) {
         this.objectList = new ArrayList<>();
         this.context = context;
+        this.chatView = chatView;
     }
 
     @Override
@@ -37,6 +42,8 @@ public class ChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
                 return Constant.TAG_MESSAGE_LETF;
             }
 
+        }else if(objectList.get(position) instanceof ChatButtonEntity){
+            return Constant.TAG_BUTTON;
         }
         /*
         else if (objectList.get(position) instanceof ErrorEntity) {
@@ -59,6 +66,9 @@ public class ChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         }else if(viewType == Constant.TAG_MESSAGE_RIGHT){
             view = LayoutInflater.from(context).inflate(R.layout.item_message_right, parent, false);
             return new MessageViewHolder(view);
+        } else if(viewType == Constant.TAG_BUTTON){
+            view = LayoutInflater.from(context).inflate(R.layout.item_chatbutton, parent, false);
+            return new ButtonViewHolder(view);
         }
 
         /*
@@ -90,6 +100,10 @@ public class ChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
             MessageViewHolder messageViewHolder = (MessageViewHolder) holder;
             MessageEntity messageEntity = (MessageEntity) objectList.get(position);
             messageViewHolder.lblMessage.setText(messageEntity.getMessage());
+        }else if(objectList.get(position) instanceof  ChatButtonEntity){
+            ButtonViewHolder buttonViewHolder = (ButtonViewHolder) holder;
+            ChatButtonEntity chatButtonEntity = (ChatButtonEntity) objectList.get(position);
+            buttonViewHolder.chbGeneral.addChatButton(chatButtonEntity);
         }
 
         /*
@@ -240,6 +254,22 @@ public class ChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
             lblMessage = (AppCompatTextView) itemView.findViewById(R.id.lblMessage);
         }
 
+    }
+
+    private class ButtonViewHolder extends RecyclerView.ViewHolder implements ChatButtonOnClick {
+
+        final ChatButton chbGeneral;
+
+        ButtonViewHolder(View itemView) {
+            super(itemView);
+            chbGeneral = (ChatButton) itemView.findViewById(R.id.chbGeneral);
+            chbGeneral.setOnChatButtonClickListener(this);
+        }
+
+        @Override
+        public void onChatButtonClick(ChatButtonEntity chatButtonEntity) {
+            chatView.onClickChatButton(chatButtonEntity);
+        }
     }
 
 }

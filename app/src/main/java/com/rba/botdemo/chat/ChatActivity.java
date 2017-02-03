@@ -7,10 +7,14 @@ import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.widget.Toast;
 
 import com.rba.botdemo.R;
 import com.rba.botdemo.base.BaseActivity;
+import com.rba.botdemo.component.chatbutton.ChatButtonOnClick;
+import com.rba.botdemo.model.entity.ChatButtonEntity;
 import com.rba.botdemo.model.entity.MessageEntity;
+import com.rba.botdemo.model.response.SynchronizeResponse;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -45,7 +49,7 @@ public class ChatActivity extends BaseActivity implements ChatView {
 
         LinearLayoutManager layoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
         rcvChat.setLayoutManager(layoutManager);
-        chatAdapter = new ChatAdapter(this);
+        chatAdapter = new ChatAdapter(this, this);
         rcvChat.setAdapter(chatAdapter);
         rcvChat.setItemAnimator(new DefaultItemAnimator());
 
@@ -63,9 +67,22 @@ public class ChatActivity extends BaseActivity implements ChatView {
             objectList.add(messageEntity);
         }
 
+
+
+        for(SynchronizeResponse.DataBean.PropertyTypeBean propertyTypeBean
+                : propertyTypeDB.getPropertyType()){
+            objectList.add(new ChatButtonEntity(0, propertyTypeBean.getProperty_id(),
+                    propertyTypeBean.getProperty_description()));
+        }
+
         chatAdapter.addData(objectList);
 
 
+    }
+
+    @Override
+    public void onClickChatButton(ChatButtonEntity chatButtonEntity) {
+        Toast.makeText(this, chatButtonEntity.getDescription(), Toast.LENGTH_SHORT).show();
     }
 
     @OnClick(R.id.imgSend)
