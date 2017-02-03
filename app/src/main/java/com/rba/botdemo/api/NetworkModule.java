@@ -1,6 +1,7 @@
 package com.rba.botdemo.api;
 
 import com.rba.botdemo.BuildConfig;
+import com.rba.botdemo.synchronize.SynchronizeInteractor;
 
 import java.util.concurrent.TimeUnit;
 
@@ -55,13 +56,13 @@ public class NetworkModule {
         return retrofit.create(ApiService.class);
     }
 
-    /*
     @Provides
     @Singleton
-    public YearInteractor year(ApiService apiService) {
-        return new YearInteractor(apiService);
+    public SynchronizeInteractor synchronize(ApiService apiService) {
+        return new SynchronizeInteractor(apiService);
     }
 
+    /*
     @Provides
     @Singleton
     public StoreInteractor store(ApiService apiService) {
