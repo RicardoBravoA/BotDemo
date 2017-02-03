@@ -1,6 +1,10 @@
 package com.rba.botdemo.base;
 
+import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+
+import com.rba.botdemo.api.NetworkModule;
+import com.rba.botdemo.di.BotComponent;
 
 /**
  * Created by Ricardo Bravo on 3/02/17.
@@ -8,16 +12,16 @@ import android.support.v7.app.AppCompatActivity;
 
 public class BaseActivity extends AppCompatActivity {
 
-    private ChartComponent chartComponent;
+    private BotComponent botComponent;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        chartComponent = DaggerChartComponent.builder().networkModule(new NetworkModule()).build();
+        //botComponent = Dagger.builder().networkModule(new NetworkModule()).build();
     }
 
-    public ChartComponent getChartComponent() {
-        return chartComponent;
+    public BotComponent getBotComponent() {
+        return botComponent;
     }
 
 }
