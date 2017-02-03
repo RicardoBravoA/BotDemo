@@ -1,7 +1,6 @@
 package com.rba.botdemo.synchronize;
 
-import android.accounts.NetworkErrorException;
-
+import com.rba.botdemo.api.NetworkError;
 import com.rba.botdemo.model.response.ErrorResponse;
 import com.rba.botdemo.model.response.SynchronizeResponse;
 
@@ -15,7 +14,7 @@ public interface SynchronizeCallback {
 
     void onSynchronizeError(ErrorResponse errorResponse);
 
-    void onSynchronizeFailure(NetworkErrorException networkError);
+    void onSynchronizeFailure(NetworkError networkError);
 
 
 }
