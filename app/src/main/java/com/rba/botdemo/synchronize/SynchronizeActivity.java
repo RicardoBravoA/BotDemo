@@ -1,14 +1,14 @@
 package com.rba.botdemo.synchronize;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
 import android.widget.LinearLayout;
 
 import com.rba.botdemo.R;
 import com.rba.botdemo.base.BaseActivity;
+import com.rba.botdemo.chat.ChatActivity;
 import com.rba.botdemo.model.response.SynchronizeResponse;
-import com.rba.botdemo.storage.database.OperationTypeDB;
-import com.rba.botdemo.storage.database.PropertyTypeDB;
 
 import javax.inject.Inject;
 
@@ -20,8 +20,6 @@ public class SynchronizeActivity extends BaseActivity implements SynchronizeView
     private SynchronizePresenter synchronizePresenter;
     @Inject
     SynchronizeInteractor synchronizeInteractor;
-    private OperationTypeDB operationTypeDB;
-    private PropertyTypeDB propertyTypeDB;
     @BindView(R.id.linSynchronize) LinearLayout linSynchronize;
 
 
@@ -36,14 +34,26 @@ public class SynchronizeActivity extends BaseActivity implements SynchronizeView
     @Override
     public void init() {
         ButterKnife.bind(this);
-        synchronizePresenter = new SynchronizePresenter(synchronizeInteractor, this);
-        synchronizePresenter.loadSynchronize();
+        validData();
+    }
+
+    @Override
+    public void validData() {
+        if(operationTypeDB.isData()){
+            nextActivity();
+        }else{
+            synchronizePresenter = new SynchronizePresenter(synchronizeInteractor, this);
+            synchronizePresenter.loadSynchronize();
+        }
+    }
+
+    @Override
+    public void nextActivity() {
+        startActivity(new Intent(this, ChatActivity.class));
     }
 
     @Override
     public void addData(SynchronizeResponse synchronizeResponse) {
-        operationTypeDB = new OperationTypeDB(this);
-        propertyTypeDB = new PropertyTypeDB(this);
 
         for(SynchronizeResponse.DataBean.OperationTypeBean operationTypeBean
                 : synchronizeResponse.getData().getOperation_type()){
@@ -55,12 +65,13 @@ public class SynchronizeActivity extends BaseActivity implements SynchronizeView
             propertyTypeDB.addPropertyType(propertyTypeBean);
         }
 
+        nextActivity();
+
     }
 
     @Override
     public void showMessageError(String message) {
         Snackbar.make(linSynchronize, message, Snackbar.LENGTH_SHORT).show();
     }
-
 
 }

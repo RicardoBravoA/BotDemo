@@ -10,6 +10,10 @@ public interface SynchronizeView {
 
     void init();
 
+    void validData();
+
+    void nextActivity();
+
     void addData(SynchronizeResponse synchronizeResponse);
 
     void showMessageError(String message);

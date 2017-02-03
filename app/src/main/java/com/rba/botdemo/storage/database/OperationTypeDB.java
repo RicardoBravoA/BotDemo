@@ -66,4 +66,26 @@ public class OperationTypeDB extends DatabaseHandler{
         return operationTypeList;
     }
 
+    public boolean isData(){
+
+        String selectQuery = "SELECT COUNT("+ConstantDB.KEY_OPERATION_ID+") FROM "+ConstantDB.KEY_TABLE_OPERATION_TYPE;
+        int count = 0;
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = db.rawQuery(selectQuery, null);
+
+        try{
+            if (cursor.moveToFirst()) {
+                do {
+                    count = cursor.getInt(0);
+                } while (cursor.moveToNext());
+            }
+        } catch (Exception e){
+            e.printStackTrace();
+        } finally {
+            cursor.close();
+        }
+
+        return count>0;
+    }
+
 }
