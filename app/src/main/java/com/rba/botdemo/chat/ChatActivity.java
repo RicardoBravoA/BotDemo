@@ -1,54 +1,54 @@
 package com.rba.botdemo.chat;
 
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.view.View;
-import android.view.Menu;
-import android.view.MenuItem;
+import android.widget.Toast;
 
 import com.rba.botdemo.R;
+import com.rba.botdemo.base.BaseActivity;
+import com.rba.botdemo.component.chatbutton.ChatButton;
+import com.rba.botdemo.component.chatbutton.ChatButtonOnClick;
+import com.rba.botdemo.model.entity.ChatButtonEntity;
+import com.rba.botdemo.model.response.SynchronizeResponse;
 
-public class ChatActivity extends AppCompatActivity {
+import java.util.ArrayList;
+import java.util.List;
+
+import butterknife.BindView;
+import butterknife.ButterKnife;
+
+public class ChatActivity extends BaseActivity implements ChatButtonOnClick {
+
+    @BindView(R.id.chbGeneral) ChatButton chbGeneral;
+    @BindView(R.id.toolbar) Toolbar toolbar;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_chat);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+
+        ButterKnife.bind(this);
         setSupportActionBar(toolbar);
 
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });
+        load();
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_main, menu);
-        return true;
-    }
+    private void load(){
+        List<ChatButtonEntity> chatButtonEntityList = new ArrayList<>();
 
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
+        for(SynchronizeResponse.DataBean.PropertyTypeBean propertyTypeBean
+                : propertyTypeDB.getPropertyType()){
+            chatButtonEntityList.add(new ChatButtonEntity(propertyTypeBean.getProperty_id(),
+                    propertyTypeBean.getProperty_description()));
         }
 
-        return super.onOptionsItemSelected(item);
+        chbGeneral.addChatButtons(chatButtonEntityList);
+        chbGeneral.setOnChatButtonClickListener(this);
+
+    }
+
+    @Override
+    public void onChatButtonClick(ChatButtonEntity chatButtonEntity) {
+        Toast.makeText(this, chatButtonEntity.getDescription(), Toast.LENGTH_SHORT).show();
     }
 }
