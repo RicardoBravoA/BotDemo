@@ -4,6 +4,7 @@ import android.os.Bundle;
 
 import com.rba.botdemo.R;
 import com.rba.botdemo.base.BaseActivity;
+import com.rba.botdemo.model.response.SynchronizeResponse;
 
 public class SynchronizeActivity extends BaseActivity implements SynchronizeView {
 
@@ -15,6 +16,16 @@ public class SynchronizeActivity extends BaseActivity implements SynchronizeView
 
     @Override
     public void init() {
+
+    }
+
+    @Override
+    public void addData(SynchronizeResponse synchronizeResponse) {
+
+    }
+
+    @Override
+    public void showMessageError(String message) {
 
     }
 
