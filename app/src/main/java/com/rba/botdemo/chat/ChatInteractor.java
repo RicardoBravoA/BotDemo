@@ -8,7 +8,6 @@ import com.rba.botdemo.api.ErrorUtil;
 import com.rba.botdemo.api.NetworkError;
 import com.rba.botdemo.model.response.ChatResponse;
 import com.rba.botdemo.model.response.ErrorResponse;
-import com.rba.botdemo.model.response.SynchronizeResponse;
 
 import java.util.HashMap;
 

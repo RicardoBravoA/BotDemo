@@ -1,6 +1,7 @@
 package com.rba.botdemo.api;
 
 import com.rba.botdemo.BuildConfig;
+import com.rba.botdemo.chat.ChatInteractor;
 import com.rba.botdemo.synchronize.SynchronizeInteractor;
 
 import java.util.concurrent.TimeUnit;
@@ -60,6 +61,12 @@ public class NetworkModule {
     @Singleton
     public SynchronizeInteractor synchronize(ApiService apiService) {
         return new SynchronizeInteractor(apiService);
+    }
+
+    @Provides
+    @Singleton
+    public ChatInteractor chat(ApiService apiService) {
+        return new ChatInteractor(apiService);
     }
 
     /*
