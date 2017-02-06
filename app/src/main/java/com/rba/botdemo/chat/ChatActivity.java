@@ -16,7 +16,6 @@ import com.rba.botdemo.base.BaseActivity;
 import com.rba.botdemo.model.entity.ChatButtonEntity;
 import com.rba.botdemo.model.entity.MessageEntity;
 import com.rba.botdemo.model.response.ChatResponse;
-import com.rba.botdemo.model.response.OperationResponse;
 import com.rba.botdemo.util.Constant;
 
 import java.util.ArrayList;
@@ -91,23 +90,23 @@ public class ChatActivity extends BaseActivity implements ChatView {
     }
 
     @Override
-    public void showOperationData(OperationResponse operationResponse) {
-        response_type_id = operationResponse.getMessage().getResponse_type_id();
+    public void showOperationData(ChatResponse chatResponse) {
+        response_type_id = chatResponse.getMessage().getResponse_type_id();
 
-        if(!operationResponse.getMessage().getResponse_1().isEmpty()){
+        if(!chatResponse.getMessage().getResponse_1().isEmpty()){
             MessageEntity messageEntity = new MessageEntity();
             messageEntity.setType(Constant.TAG_RECEIPT);
-            messageEntity.setMessage(operationResponse.getMessage().getResponse_1());
+            messageEntity.setMessage(chatResponse.getMessage().getResponse_1());
 
             objectList.add(messageEntity);
             chatAdapter.addData(objectList);
             chatAdapter.notifyItemInserted(objectList.size()-1);
         }
 
-        if(!operationResponse.getMessage().getResponse_2().isEmpty()){
+        if(!chatResponse.getMessage().getResponse_2().isEmpty()){
             MessageEntity messageEntity = new MessageEntity();
             messageEntity.setType(Constant.TAG_RECEIPT);
-            messageEntity.setMessage(operationResponse.getMessage().getResponse_2());
+            messageEntity.setMessage(chatResponse.getMessage().getResponse_2());
             objectList.add(messageEntity);
             chatAdapter.addData(objectList);
             chatAdapter.notifyItemInserted(objectList.size()-1);
@@ -115,8 +114,8 @@ public class ChatActivity extends BaseActivity implements ChatView {
 
         List<ChatButtonEntity> chatButtonEntityList = new ArrayList<>();
 
-        for(OperationResponse.OperationBean operationBean
-                : operationResponse.getOperation()){
+        for(ChatResponse.OperationBean operationBean
+                : chatResponse.getOperation()){
             chatButtonEntityList.add(new ChatButtonEntity(Constant.TAG_OPERATION,
                     operationBean.getOperation_id(),
                     operationBean.getOperation_description()));
@@ -130,13 +129,13 @@ public class ChatActivity extends BaseActivity implements ChatView {
     }
 
     @Override
-    public void showPropertyData(ChatResponse.PropertyBean propertyResponse) {
-
+    public void showPropertyData(ChatResponse chatResponse) {
+        Log.i("z- showPropertyData", new Gson().toJson(chatResponse));
     }
 
     @Override
-    public void showPropertyTypeData(ChatResponse.PropertyTypeBean propertyTypeResponse) {
-
+    public void showPropertyTypeData(ChatResponse chatResponse) {
+        Log.i("z- showPropertyTypeData", new Gson().toJson(chatResponse));
     }
 
     @Override

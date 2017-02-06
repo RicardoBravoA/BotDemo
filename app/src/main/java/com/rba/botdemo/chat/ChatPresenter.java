@@ -3,7 +3,6 @@ package com.rba.botdemo.chat;
 import com.rba.botdemo.api.NetworkError;
 import com.rba.botdemo.model.response.ChatResponse;
 import com.rba.botdemo.model.response.ErrorResponse;
-import com.rba.botdemo.model.response.OperationResponse;
 import com.rba.botdemo.util.Util;
 
 import java.util.Map;
@@ -32,18 +31,18 @@ public class ChatPresenter {
         Subscription subscription = chatInteractor.sendMessage(data, new ChatCallback() {
 
             @Override
-            public void onChatOperationResponse(OperationResponse operationResponse) {
-                chatView.showOperationData(operationResponse);
+            public void onChatOperationResponse(ChatResponse chatResponse) {
+                chatView.showOperationData(chatResponse);
             }
 
             @Override
-            public void onChatPropertyResponse(ChatResponse.PropertyBean propertyResponse) {
-                chatView.showPropertyData(propertyResponse);
+            public void onChatPropertyResponse(ChatResponse chatResponse) {
+                chatView.showPropertyData(chatResponse);
             }
 
             @Override
-            public void onChatPropertyTypeResponse(ChatResponse.PropertyTypeBean propertyTypeResponse) {
-                chatView.showPropertyTypeData(propertyTypeResponse);
+            public void onChatPropertyTypeResponse(ChatResponse chatResponse) {
+                chatView.showPropertyTypeData(chatResponse);
             }
 
             @Override
