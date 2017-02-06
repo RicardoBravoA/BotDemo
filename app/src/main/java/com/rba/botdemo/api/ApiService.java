@@ -4,7 +4,7 @@ import com.rba.botdemo.BuildConfig;
 import com.rba.botdemo.model.response.ChatResponse;
 import com.rba.botdemo.model.response.SynchronizeResponse;
 
-import java.util.HashMap;
+import java.util.Map;
 
 import retrofit2.http.FieldMap;
 import retrofit2.http.FormUrlEncoded;
@@ -23,6 +23,6 @@ public interface ApiService {
 
     @FormUrlEncoded
     @POST(BuildConfig.URL_MESSAGE)
-    Observable<ChatResponse> postMessage(@FieldMap HashMap<String, String> data);
+    Observable<ChatResponse> postMessage(@FieldMap Map<String, String> data);
 
 }

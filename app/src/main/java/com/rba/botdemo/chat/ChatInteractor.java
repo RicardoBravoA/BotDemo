@@ -9,7 +9,7 @@ import com.rba.botdemo.api.NetworkError;
 import com.rba.botdemo.model.response.ChatResponse;
 import com.rba.botdemo.model.response.ErrorResponse;
 
-import java.util.HashMap;
+import java.util.Map;
 
 import retrofit2.Response;
 import retrofit2.adapter.rxjava.HttpException;
@@ -32,7 +32,7 @@ public class ChatInteractor {
         this.apiService = apiService;
     }
 
-    public Subscription getSynchronize(HashMap<String, String> data, final ChatCallback callback){
+    public Subscription sendMessage(Map<String, String> data, final ChatCallback callback){
 
         return  apiService.postMessage(data)
                 .subscribeOn(Schedulers.io())
