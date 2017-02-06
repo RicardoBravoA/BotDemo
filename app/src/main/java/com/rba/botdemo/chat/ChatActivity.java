@@ -9,7 +9,6 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
-import android.widget.Toast;
 
 import com.google.gson.Gson;
 import com.rba.botdemo.R;
@@ -41,9 +40,9 @@ public class ChatActivity extends BaseActivity implements ChatView {
     private ChatAdapter chatAdapter;
     private ChatPresenter chatPresenter;
     private List<Object> objectList = new ArrayList<>();
-    private Map<String, String> data = new HashMap<>();
     @Inject
     ChatInteractor chatInteractor;
+    private String message = "";
     private String id = "0";
     private String operation_id = "0";
     private String property_id = "0";
@@ -76,7 +75,19 @@ public class ChatActivity extends BaseActivity implements ChatView {
 
     @Override
     public void onClickChatButton(ChatButtonEntity chatButtonEntity) {
-        Toast.makeText(this, "position "+chatButtonEntity.getDescription(), Toast.LENGTH_SHORT).show();
+
+        if(chatButtonEntity.getType().equals(Constant.TAG_OPERATION)){
+            id = chatButtonEntity.getId();
+            message = Constant.TAG_OPERATION;
+
+            send();
+
+        } else if(chatButtonEntity.getType().equals(Constant.TAG_PROPERTY)){
+            property_id = chatButtonEntity.getId();
+        }
+
+
+
         Log.i("z- onClick", new Gson().toJson(chatButtonEntity));
     }
 
@@ -86,7 +97,7 @@ public class ChatActivity extends BaseActivity implements ChatView {
 
         if(!operationResponse.getMessage().getResponse_1().isEmpty()){
             MessageEntity messageEntity = new MessageEntity();
-            messageEntity.setType(1);
+            messageEntity.setType(Constant.TAG_RECEIPT);
             messageEntity.setMessage(operationResponse.getMessage().getResponse_1());
 
             objectList.add(messageEntity);
@@ -96,7 +107,7 @@ public class ChatActivity extends BaseActivity implements ChatView {
 
         if(!operationResponse.getMessage().getResponse_2().isEmpty()){
             MessageEntity messageEntity = new MessageEntity();
-            messageEntity.setType(1);
+            messageEntity.setType(Constant.TAG_RECEIPT);
             messageEntity.setMessage(operationResponse.getMessage().getResponse_2());
             objectList.add(messageEntity);
             chatAdapter.addData(objectList);
@@ -107,7 +118,7 @@ public class ChatActivity extends BaseActivity implements ChatView {
 
         for(OperationResponse.OperationBean operationBean
                 : operationResponse.getOperation()){
-            chatButtonEntityList.add(new ChatButtonEntity(Constant.TAG_OPERATION_TYPE,
+            chatButtonEntityList.add(new ChatButtonEntity(Constant.TAG_OPERATION,
                     operationBean.getOperation_id(),
                     operationBean.getOperation_description()));
         }
@@ -135,6 +146,17 @@ public class ChatActivity extends BaseActivity implements ChatView {
     }
 
     @Override
+    public void send() {
+        Map<String, String> data = new HashMap<>();
+        data.put("message", message);
+        data.put("id", id);
+        data.put("operation_id", operation_id);
+        data.put("property_id", property_id);
+
+        chatPresenter.sendMessage(data);
+    }
+
+    @Override
     public void clear() {
         id = "";
         operation_id = "";
@@ -143,40 +165,19 @@ public class ChatActivity extends BaseActivity implements ChatView {
 
     @OnClick(R.id.imgSend)
     public void onClickSend(){
-        String message = txtMessage.getText().toString().trim();
+        message = txtMessage.getText().toString().trim();
         if(chatPresenter.validMessage(message)){
 
             MessageEntity messageEntity = new MessageEntity();
-            messageEntity.setType(0);
+            messageEntity.setType(Constant.TAG_SEND);
             messageEntity.setMessage(message);
             objectList.add(messageEntity);
             chatAdapter.addData(objectList);
             chatAdapter.notifyItemInserted(objectList.size()-1);
 
-            //data.clear();
-            data.put("message", message);
-            data.put("id", id);
-            data.put("operation_id", operation_id);
-            data.put("property_id", property_id);
-            chatPresenter.sendMessage(data);
+            send();
         }
 
     }
-
-    /*
-    private void load(){
-        List<ChatButtonEntity> chatButtonEntityList = new ArrayList<>();
-
-        for(SynchronizeResponse.DataBean.PropertyTypeBean propertyTypeBean
-                : propertyTypeDB.getPropertyType()){
-            chatButtonEntityList.add(new ChatButtonEntity(propertyTypeBean.getProperty_id(),
-                    propertyTypeBean.getProperty_description()));
-        }
-
-        chbGeneral.addChatButtons(chatButtonEntityList);
-        chbGeneral.setOnChatButtonClickListener(this);
-
-    }
-    */
 
 }

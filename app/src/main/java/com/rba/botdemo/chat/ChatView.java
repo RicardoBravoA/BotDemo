@@ -5,6 +5,8 @@ import com.rba.botdemo.model.response.OperationResponse;
 import com.rba.botdemo.model.response.PropertyResponse;
 import com.rba.botdemo.model.response.PropertyTypeResponse;
 
+import java.util.Map;
+
 /**
  * Created by Ricardo Bravo on 3/02/17.
  */
@@ -22,6 +24,8 @@ public interface ChatView {
     void showPropertyTypeData(PropertyTypeResponse propertyTypeResponse);
 
     void showMessageError(String error);
+
+    void send();
 
     void clear();
 
