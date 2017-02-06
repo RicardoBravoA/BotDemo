@@ -1,6 +1,7 @@
 package com.rba.botdemo.component.chatbutton;
 
 import android.content.Context;
+import android.graphics.Canvas;
 import android.support.v7.widget.AppCompatButton;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
@@ -46,23 +47,45 @@ public class ChatButton extends LinearLayout {
         this.chatButtonOnClick = chatButtonOnClick;
     }
 
+    @Override
+    protected void onSizeChanged(int w, int h, int oldw, int oldh) {
+        super.onSizeChanged(w, h, oldw, oldh);
+    }
+
+    @Override
+    protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
+        super.onMeasure(widthMeasureSpec, heightMeasureSpec);
+        int width = getMeasuredWidth();
+        if (width <= 0){
+            return;
+        }
+    }
+
+    @Override
+    protected void onDraw(Canvas canvas) {
+        super.onDraw(canvas);
+        drawButton();
+    }
+
     private void drawButton(){
 
-        for(final ChatButtonEntity chatButtonEntity: chatButtonEntityList){
+        for(int i = 0; i < chatButtonEntityList.size(); i++){
+            final ChatButtonEntity chatButtonEntity = chatButtonEntityList.get(i);
             View view = mInflater.inflate(R.layout.item_button, null);
+            view.setId(i);
             AppCompatButton btn = (AppCompatButton)view.findViewById(R.id.btn);
             btn.setText(chatButtonEntity.getDescription());
+            final int pos = i;
 
             btn.setOnClickListener(new OnClickListener() {
                 @Override
                 public void onClick(View view) {
                     if (chatButtonOnClick != null) {
-                        chatButtonOnClick.onChatButtonClick(chatButtonEntity);
+                        chatButtonOnClick.onChatButtonClick(pos, chatButtonEntity);
                     }
                 }
             });
             addView(view);
-
         }
 
     }

@@ -2,7 +2,6 @@ package com.rba.botdemo.chat;
 
 import android.os.Bundle;
 import android.support.v7.widget.AppCompatEditText;
-import android.support.v7.widget.AppCompatImageView;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -11,7 +10,6 @@ import android.widget.Toast;
 
 import com.rba.botdemo.R;
 import com.rba.botdemo.base.BaseActivity;
-import com.rba.botdemo.component.chatbutton.ChatButtonOnClick;
 import com.rba.botdemo.model.entity.ChatButtonEntity;
 import com.rba.botdemo.model.entity.MessageEntity;
 import com.rba.botdemo.model.response.SynchronizeResponse;
@@ -68,7 +66,6 @@ public class ChatActivity extends BaseActivity implements ChatView {
         }
 
 
-
         for(SynchronizeResponse.DataBean.PropertyTypeBean propertyTypeBean
                 : propertyTypeDB.getPropertyType()){
             objectList.add(new ChatButtonEntity(0, propertyTypeBean.getProperty_id(),
@@ -81,8 +78,8 @@ public class ChatActivity extends BaseActivity implements ChatView {
     }
 
     @Override
-    public void onClickChatButton(ChatButtonEntity chatButtonEntity) {
-        Toast.makeText(this, chatButtonEntity.getDescription(), Toast.LENGTH_SHORT).show();
+    public void onClickChatButton(int pos, ChatButtonEntity chatButtonEntity) {
+        Toast.makeText(this, "position "+pos+" - "+chatButtonEntity.getDescription(), Toast.LENGTH_SHORT).show();
     }
 
     @OnClick(R.id.imgSend)
@@ -92,7 +89,8 @@ public class ChatActivity extends BaseActivity implements ChatView {
             objectList.add(new MessageEntity(0, message));
             objectList.add(new MessageEntity(1, message));
             rcvChat.smoothScrollToPosition(objectList.size() - 1);
-            chatAdapter.notifyDataSetChanged();
+            chatAdapter.notifyItemInserted(objectList.size()-2);
+            chatAdapter.notifyItemInserted(objectList.size()-1);
         }
 
     }

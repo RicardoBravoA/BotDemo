@@ -10,6 +10,6 @@ public interface ChatView {
 
     void init();
 
-    void onClickChatButton(ChatButtonEntity chatButtonEntity);
+    void onClickChatButton(int pos, ChatButtonEntity chatButtonEntity);
 
 }

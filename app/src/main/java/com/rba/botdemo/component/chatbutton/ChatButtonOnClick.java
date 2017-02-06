@@ -8,6 +8,6 @@ import com.rba.botdemo.model.entity.ChatButtonEntity;
 
 public interface ChatButtonOnClick {
 
-    void onChatButtonClick(ChatButtonEntity chatButtonEntity);
+    void onChatButtonClick(int id, ChatButtonEntity chatButtonEntity);
 
 }
