@@ -13,7 +13,7 @@ public interface ChatView {
 
     void init();
 
-    void onClickChatButton(int pos, ChatButtonEntity chatButtonEntity);
+    void onClickChatButton(ChatButtonEntity chatButtonEntity);
 
     void showOperationData(OperationResponse operationResponse);
 

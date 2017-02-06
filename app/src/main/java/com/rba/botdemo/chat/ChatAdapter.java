@@ -267,8 +267,8 @@ public class ChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         }
 
         @Override
-        public void onChatButtonClick(int pos, ChatButtonEntity chatButtonEntity) {
-            chatView.onClickChatButton(pos, chatButtonEntity);
+        public void onChatButtonClick(ChatButtonEntity chatButtonEntity) {
+            chatView.onClickChatButton(chatButtonEntity);
         }
     }
 

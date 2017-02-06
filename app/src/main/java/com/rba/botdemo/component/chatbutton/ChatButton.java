@@ -73,15 +73,14 @@ public class ChatButton extends LinearLayout {
             final ChatButtonEntity chatButtonEntity = chatButtonEntityList.get(i);
             View view = mInflater.inflate(R.layout.item_button, null);
             view.setId(i);
-            AppCompatButton btn = (AppCompatButton)view.findViewById(R.id.btn);
+            AppCompatButton btn = (AppCompatButton) view.findViewById(R.id.btn);
             btn.setText(chatButtonEntity.getDescription());
-            final int pos = i;
 
             btn.setOnClickListener(new OnClickListener() {
                 @Override
                 public void onClick(View view) {
                     if (chatButtonOnClick != null) {
-                        chatButtonOnClick.onChatButtonClick(pos, chatButtonEntity);
+                        chatButtonOnClick.onChatButtonClick(chatButtonEntity);
                     }
                 }
             });

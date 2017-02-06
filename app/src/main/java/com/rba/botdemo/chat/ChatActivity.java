@@ -8,8 +8,10 @@ import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.widget.Toast;
 
+import com.google.gson.Gson;
 import com.rba.botdemo.R;
 import com.rba.botdemo.base.BaseActivity;
 import com.rba.botdemo.model.entity.ChatButtonEntity;
@@ -17,6 +19,7 @@ import com.rba.botdemo.model.entity.MessageEntity;
 import com.rba.botdemo.model.response.OperationResponse;
 import com.rba.botdemo.model.response.PropertyResponse;
 import com.rba.botdemo.model.response.PropertyTypeResponse;
+import com.rba.botdemo.util.Constant;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -69,35 +72,12 @@ public class ChatActivity extends BaseActivity implements ChatView {
 
         chatPresenter = new ChatPresenter(chatInteractor, this);
 
-
-        /*
-        for(int i = 0; i < 4; i++){
-            MessageEntity messageEntity = new MessageEntity();
-            if(i % 2 == 0){
-                messageEntity.setType(0);
-            }else{
-                messageEntity.setType(1);
-            }
-            messageEntity.setMessage("Message ".concat(String.valueOf(i)));
-            objectList.add(messageEntity);
-        }
-
-
-        for(SynchronizeResponse.DataBean.PropertyTypeBean propertyTypeBean
-                : propertyTypeDB.getPropertyType()){
-            objectList.add(new ChatButtonEntity(0, propertyTypeBean.getProperty_id(),
-                    propertyTypeBean.getProperty_description()));
-        }
-
-        chatAdapter.addData(objectList);
-        */
-
-
     }
 
     @Override
-    public void onClickChatButton(int pos, ChatButtonEntity chatButtonEntity) {
-        Toast.makeText(this, "position "+pos+" - "+chatButtonEntity.getDescription(), Toast.LENGTH_SHORT).show();
+    public void onClickChatButton(ChatButtonEntity chatButtonEntity) {
+        Toast.makeText(this, "position "+chatButtonEntity.getDescription(), Toast.LENGTH_SHORT).show();
+        Log.i("z- onClick", new Gson().toJson(chatButtonEntity));
     }
 
     @Override
@@ -122,6 +102,19 @@ public class ChatActivity extends BaseActivity implements ChatView {
             chatAdapter.addData(objectList);
             chatAdapter.notifyItemInserted(objectList.size()-1);
         }
+
+        List<ChatButtonEntity> chatButtonEntityList = new ArrayList<>();
+
+        for(OperationResponse.OperationBean operationBean
+                : operationResponse.getOperation()){
+            chatButtonEntityList.add(new ChatButtonEntity(Constant.TAG_OPERATION_TYPE,
+                    operationBean.getOperation_id(),
+                    operationBean.getOperation_description()));
+        }
+
+        objectList.addAll(chatButtonEntityList);
+        chatAdapter.addData(objectList);
+        chatAdapter.notifyItemInserted(objectList.size()-1);
 
 
     }
@@ -166,13 +159,6 @@ public class ChatActivity extends BaseActivity implements ChatView {
             data.put("operation_id", operation_id);
             data.put("property_id", property_id);
             chatPresenter.sendMessage(data);
-            /*
-            objectList.add(new MessageEntity(0, message));
-            objectList.add(new MessageEntity(1, message));
-            rcvChat.smoothScrollToPosition(objectList.size() - 1);
-            chatAdapter.notifyItemInserted(objectList.size()-2);
-            chatAdapter.notifyItemInserted(objectList.size()-1);
-            */
         }
 
     }
