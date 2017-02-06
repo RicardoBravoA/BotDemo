@@ -1,7 +1,6 @@
 package com.rba.botdemo.api;
 
 import com.rba.botdemo.BuildConfig;
-import com.rba.botdemo.model.response.ChatResponse;
 import com.rba.botdemo.model.response.SynchronizeResponse;
 
 import java.util.Map;
@@ -23,6 +22,6 @@ public interface ApiService {
 
     @FormUrlEncoded
     @POST(BuildConfig.URL_MESSAGE)
-    Observable<ChatResponse> postMessage(@FieldMap Map<String, String> data);
+    Observable<Object> postMessage(@FieldMap Map<String, String> data);
 
 }

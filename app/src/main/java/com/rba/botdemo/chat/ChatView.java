@@ -17,4 +17,6 @@ public interface ChatView {
 
     void showMessageError(String error);
 
+    void clear();
+
 }

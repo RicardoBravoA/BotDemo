@@ -8,8 +8,10 @@ import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.widget.Toast;
 
+import com.google.gson.Gson;
 import com.rba.botdemo.R;
 import com.rba.botdemo.base.BaseActivity;
 import com.rba.botdemo.model.entity.ChatButtonEntity;
@@ -43,6 +45,7 @@ public class ChatActivity extends BaseActivity implements ChatView {
     private String id = "0";
     private String operation_id = "0";
     private String property_id = "0";
+    private int response_type_id = 0;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -101,13 +104,19 @@ public class ChatActivity extends BaseActivity implements ChatView {
     @Override
     public void showData(ChatResponse chatResponse) {
 
+        Log.i("z- chatResponse", new Gson().toJson(chatResponse));
+
         if(chatResponse.getType().equals(Constant.TAG_OPERATION)){
+
+            response_type_id = chatResponse.getMessage().getResponse_type_id();
 
             if(!chatResponse.getMessage().getResponse_1().isEmpty()){
                 MessageEntity messageEntity = new MessageEntity();
                 messageEntity.setType(1);
                 messageEntity.setMessage(chatResponse.getMessage().getResponse_1());
+
                 objectList.add(messageEntity);
+                chatAdapter.addData(objectList);
                 chatAdapter.notifyItemInserted(objectList.size()-1);
             }
 
@@ -116,8 +125,11 @@ public class ChatActivity extends BaseActivity implements ChatView {
                 messageEntity.setType(1);
                 messageEntity.setMessage(chatResponse.getMessage().getResponse_2());
                 objectList.add(messageEntity);
+                chatAdapter.addData(objectList);
                 chatAdapter.notifyItemInserted(objectList.size()-1);
             }
+
+            
 
 
         }else if(chatResponse.getType().equals(Constant.TAG_PROPERTY_TYPE)){
@@ -133,6 +145,13 @@ public class ChatActivity extends BaseActivity implements ChatView {
         Snackbar.make(clGeneral, error, Snackbar.LENGTH_LONG).show();
     }
 
+    @Override
+    public void clear() {
+        id = "";
+        operation_id = "";
+        property_id = "";
+    }
+
     @OnClick(R.id.imgSend)
     public void onClickSend(){
         String message = txtMessage.getText().toString().trim();
@@ -142,6 +161,7 @@ public class ChatActivity extends BaseActivity implements ChatView {
             messageEntity.setType(0);
             messageEntity.setMessage(message);
             objectList.add(messageEntity);
+            chatAdapter.addData(objectList);
             chatAdapter.notifyItemInserted(objectList.size()-1);
 
             //data.clear();

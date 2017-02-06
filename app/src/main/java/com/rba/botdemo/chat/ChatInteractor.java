@@ -8,6 +8,10 @@ import com.rba.botdemo.api.ErrorUtil;
 import com.rba.botdemo.api.NetworkError;
 import com.rba.botdemo.model.response.ChatResponse;
 import com.rba.botdemo.model.response.ErrorResponse;
+import com.rba.botdemo.model.response.OperationResponse;
+import com.rba.botdemo.model.response.PropertyResponse;
+import com.rba.botdemo.model.response.PropertyTypeResponse;
+import com.rba.botdemo.util.Constant;
 
 import java.util.Map;
 
@@ -37,13 +41,13 @@ public class ChatInteractor {
         return  apiService.postMessage(data)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .onErrorResumeNext(new Func1<Throwable, Observable<? extends ChatResponse>>() {
+                .onErrorResumeNext(new Func1<Throwable, Observable<?>>() {
                     @Override
-                    public Observable<? extends ChatResponse> call(Throwable throwable) {
+                    public Observable<?> call(Throwable throwable) {
                         Log.i("z- onErrorResumeNext", throwable.getMessage());
                         return Observable.error(throwable);
                     }
-                }).subscribe(new Subscriber<ChatResponse>() {
+                }).subscribe(new Subscriber<Object>() {
                     @Override
                     public void onCompleted() {
 
@@ -62,9 +66,43 @@ public class ChatInteractor {
                     }
 
                     @Override
-                    public void onNext(ChatResponse chatResponse) {
-                        Log.i("z- onNext", new Gson().toJson(chatResponse));
-                        callback.onChatResponse(chatResponse);
+                    public void onNext(Object o) {
+                        ChatResponse chatResponse = new Gson().fromJson(new Gson().toJson(o), ChatResponse.class);
+                        Log.i("z- type", chatResponse.getType());
+
+                        if(chatResponse.getType().equals(Constant.TAG_OPERATION)){
+                            OperationResponse operationResponse
+                                    = new Gson().fromJson(
+                                    new Gson().toJson(o), OperationResponse.class);
+                            Log.i("z- data", new Gson().toJson(operationResponse));
+                            callback.onChatOperationResponse(operationResponse);
+                        } else if(chatResponse.getType().equals(Constant.TAG_PROPERTY_TYPE)){
+                            PropertyTypeResponse propertyTypeResponse
+                                    = new Gson().fromJson(
+                                    new Gson().toJson(o), PropertyTypeResponse.class);
+                            Log.i("z- data", new Gson().toJson(propertyTypeResponse));
+                            callback.onChatPropertyTypeResponse(propertyTypeResponse);
+                        } else if(chatResponse.getType().equals(Constant.TAG_PROPERTY)){
+                            PropertyResponse propertyResponse
+                                    = new Gson().fromJson(
+                                    new Gson().toJson(o), PropertyResponse.class);
+                            Log.i("z- data", new Gson().toJson(propertyResponse));
+                            callback.onChatPropertyResponse(propertyResponse);
+                        }
+
+                        /*
+                        if(o instanceof ChatResponse){
+                            ChatResponse chatResponse = (ChatResponse) o;
+                            Log.i("z- chatResponse", new Gson().toJson(chatResponse));
+                        }else if(o instanceof PropertyTypeResponse){
+                            PropertyTypeResponse propertyTypeResponse = (PropertyTypeResponse) o;
+                            Log.i("z- propertyTypeResponse", new Gson().toJson(propertyTypeResponse));
+                        }else if(o instanceof PropertyResponse){
+                            PropertyResponse propertyResponse = (PropertyResponse) o;
+                            Log.i("z- chatResponse", new Gson().toJson(propertyResponse));
+                        }
+                        */
+
                     }
                 });
 
