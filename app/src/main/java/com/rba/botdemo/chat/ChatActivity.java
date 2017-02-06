@@ -8,19 +8,15 @@ import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.widget.Toast;
 
-import com.google.gson.Gson;
 import com.rba.botdemo.R;
 import com.rba.botdemo.base.BaseActivity;
 import com.rba.botdemo.model.entity.ChatButtonEntity;
 import com.rba.botdemo.model.entity.MessageEntity;
-import com.rba.botdemo.model.response.ChatResponse;
 import com.rba.botdemo.model.response.OperationResponse;
 import com.rba.botdemo.model.response.PropertyResponse;
 import com.rba.botdemo.model.response.PropertyTypeResponse;
-import com.rba.botdemo.util.Constant;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -106,6 +102,27 @@ public class ChatActivity extends BaseActivity implements ChatView {
 
     @Override
     public void showOperationData(OperationResponse operationResponse) {
+        response_type_id = operationResponse.getMessage().getResponse_type_id();
+
+        if(!operationResponse.getMessage().getResponse_1().isEmpty()){
+            MessageEntity messageEntity = new MessageEntity();
+            messageEntity.setType(1);
+            messageEntity.setMessage(operationResponse.getMessage().getResponse_1());
+
+            objectList.add(messageEntity);
+            chatAdapter.addData(objectList);
+            chatAdapter.notifyItemInserted(objectList.size()-1);
+        }
+
+        if(!operationResponse.getMessage().getResponse_2().isEmpty()){
+            MessageEntity messageEntity = new MessageEntity();
+            messageEntity.setType(1);
+            messageEntity.setMessage(operationResponse.getMessage().getResponse_2());
+            objectList.add(messageEntity);
+            chatAdapter.addData(objectList);
+            chatAdapter.notifyItemInserted(objectList.size()-1);
+        }
+
 
     }
 
@@ -116,45 +133,6 @@ public class ChatActivity extends BaseActivity implements ChatView {
 
     @Override
     public void showPropertyTypeData(PropertyTypeResponse propertyTypeResponse) {
-
-    }
-
-    @Override
-    public void showData(ChatResponse chatResponse) {
-
-        Log.i("z- chatResponse", new Gson().toJson(chatResponse));
-
-        if(chatResponse.getType().equals(Constant.TAG_OPERATION)){
-
-            response_type_id = chatResponse.getMessage().getResponse_type_id();
-
-            if(!chatResponse.getMessage().getResponse_1().isEmpty()){
-                MessageEntity messageEntity = new MessageEntity();
-                messageEntity.setType(1);
-                messageEntity.setMessage(chatResponse.getMessage().getResponse_1());
-
-                objectList.add(messageEntity);
-                chatAdapter.addData(objectList);
-                chatAdapter.notifyItemInserted(objectList.size()-1);
-            }
-
-            if(!chatResponse.getMessage().getResponse_2().isEmpty()){
-                MessageEntity messageEntity = new MessageEntity();
-                messageEntity.setType(1);
-                messageEntity.setMessage(chatResponse.getMessage().getResponse_2());
-                objectList.add(messageEntity);
-                chatAdapter.addData(objectList);
-                chatAdapter.notifyItemInserted(objectList.size()-1);
-            }
-
-
-
-
-        }else if(chatResponse.getType().equals(Constant.TAG_PROPERTY_TYPE)){
-
-        }else if(chatResponse.getType().equals(Constant.TAG_PROPERTY)){
-
-        }
 
     }
 
