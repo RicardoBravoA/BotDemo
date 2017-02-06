@@ -35,17 +35,17 @@ public class ChatPresenter {
 
             @Override
             public void onChatOperationResponse(OperationResponse operationResponse) {
-
+                chatView.showOperationData(operationResponse);
             }
 
             @Override
             public void onChatPropertyResponse(PropertyResponse propertyResponse) {
-
+                chatView.showPropertyData(propertyResponse);
             }
 
             @Override
             public void onChatPropertyTypeResponse(PropertyTypeResponse propertyTypeResponse) {
-
+                chatView.showPropertyTypeData(propertyTypeResponse);
             }
 
             @Override

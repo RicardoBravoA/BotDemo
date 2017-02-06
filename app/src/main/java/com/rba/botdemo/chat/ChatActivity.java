@@ -17,6 +17,9 @@ import com.rba.botdemo.base.BaseActivity;
 import com.rba.botdemo.model.entity.ChatButtonEntity;
 import com.rba.botdemo.model.entity.MessageEntity;
 import com.rba.botdemo.model.response.ChatResponse;
+import com.rba.botdemo.model.response.OperationResponse;
+import com.rba.botdemo.model.response.PropertyResponse;
+import com.rba.botdemo.model.response.PropertyTypeResponse;
 import com.rba.botdemo.util.Constant;
 
 import java.util.ArrayList;
@@ -102,6 +105,21 @@ public class ChatActivity extends BaseActivity implements ChatView {
     }
 
     @Override
+    public void showOperationData(OperationResponse operationResponse) {
+
+    }
+
+    @Override
+    public void showPropertyData(PropertyResponse propertyResponse) {
+
+    }
+
+    @Override
+    public void showPropertyTypeData(PropertyTypeResponse propertyTypeResponse) {
+
+    }
+
+    @Override
     public void showData(ChatResponse chatResponse) {
 
         Log.i("z- chatResponse", new Gson().toJson(chatResponse));
@@ -129,7 +147,7 @@ public class ChatActivity extends BaseActivity implements ChatView {
                 chatAdapter.notifyItemInserted(objectList.size()-1);
             }
 
-            
+
 
 
         }else if(chatResponse.getType().equals(Constant.TAG_PROPERTY_TYPE)){
