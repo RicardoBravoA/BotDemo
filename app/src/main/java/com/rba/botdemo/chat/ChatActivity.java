@@ -13,7 +13,9 @@ import android.widget.Toast;
 import com.rba.botdemo.R;
 import com.rba.botdemo.base.BaseActivity;
 import com.rba.botdemo.model.entity.ChatButtonEntity;
+import com.rba.botdemo.model.entity.MessageEntity;
 import com.rba.botdemo.model.response.ChatResponse;
+import com.rba.botdemo.util.Constant;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -99,6 +101,31 @@ public class ChatActivity extends BaseActivity implements ChatView {
     @Override
     public void showData(ChatResponse chatResponse) {
 
+        if(chatResponse.getType().equals(Constant.TAG_OPERATION)){
+
+            if(!chatResponse.getMessage().getResponse_1().isEmpty()){
+                MessageEntity messageEntity = new MessageEntity();
+                messageEntity.setType(1);
+                messageEntity.setMessage(chatResponse.getMessage().getResponse_1());
+                objectList.add(messageEntity);
+                chatAdapter.notifyItemInserted(objectList.size()-1);
+            }
+
+            if(!chatResponse.getMessage().getResponse_2().isEmpty()){
+                MessageEntity messageEntity = new MessageEntity();
+                messageEntity.setType(1);
+                messageEntity.setMessage(chatResponse.getMessage().getResponse_2());
+                objectList.add(messageEntity);
+                chatAdapter.notifyItemInserted(objectList.size()-1);
+            }
+
+
+        }else if(chatResponse.getType().equals(Constant.TAG_PROPERTY_TYPE)){
+
+        }else if(chatResponse.getType().equals(Constant.TAG_PROPERTY)){
+
+        }
+
     }
 
     @Override
@@ -110,6 +137,13 @@ public class ChatActivity extends BaseActivity implements ChatView {
     public void onClickSend(){
         String message = txtMessage.getText().toString().trim();
         if(chatPresenter.validMessage(message)){
+
+            MessageEntity messageEntity = new MessageEntity();
+            messageEntity.setType(0);
+            messageEntity.setMessage(message);
+            objectList.add(messageEntity);
+            chatAdapter.notifyItemInserted(objectList.size()-1);
+
             //data.clear();
             data.put("message", message);
             data.put("id", id);

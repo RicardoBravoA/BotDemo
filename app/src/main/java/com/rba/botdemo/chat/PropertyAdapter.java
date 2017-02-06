@@ -24,11 +24,11 @@ import butterknife.ButterKnife;
 public class PropertyAdapter extends RecyclerView.Adapter<PropertyAdapter.PropertyViewHolder> {
 
     private Context context;
-    private List<PropertyResponse> propertyResponseList;
+    private List<PropertyResponse.PropertyBean> propertyResponseList;
     static LayoutInflater inflater = null;
 
 
-    public PropertyAdapter(Context context, List<PropertyResponse> propertyResponseList) {
+    public PropertyAdapter(Context context, List<PropertyResponse.PropertyBean> propertyResponseList) {
         if(context!=null){
             this.context = context;
             inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
@@ -45,7 +45,7 @@ public class PropertyAdapter extends RecyclerView.Adapter<PropertyAdapter.Proper
     @Override
     public void onBindViewHolder(PropertyViewHolder holder, int position) {
 
-        PropertyResponse propertyResponse = propertyResponseList.get(position);
+        PropertyResponse.PropertyBean propertyResponse = propertyResponseList.get(position);
         holder.lblTitle.setText(propertyResponse.getTitle());
         holder.lblPrice.setText(propertyResponse.getPrice());
 
