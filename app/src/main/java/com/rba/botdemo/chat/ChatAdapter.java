@@ -272,4 +272,15 @@ public class ChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         }
     }
 
+    private class PropertyViewHolder extends RecyclerView.ViewHolder {
+
+        final RecyclerView rcvProperty;
+
+        PropertyViewHolder(View itemView) {
+            super(itemView);
+            rcvProperty = (RecyclerView) itemView.findViewById(R.id.rcvProperty);
+        }
+
+    }
+
 }
