@@ -4,8 +4,6 @@ import com.rba.botdemo.api.NetworkError;
 import com.rba.botdemo.model.response.ChatResponse;
 import com.rba.botdemo.model.response.ErrorResponse;
 import com.rba.botdemo.model.response.OperationResponse;
-import com.rba.botdemo.model.response.PropertyResponse;
-import com.rba.botdemo.model.response.PropertyTypeResponse;
 import com.rba.botdemo.util.Util;
 
 import java.util.Map;
@@ -39,12 +37,12 @@ public class ChatPresenter {
             }
 
             @Override
-            public void onChatPropertyResponse(PropertyResponse propertyResponse) {
+            public void onChatPropertyResponse(ChatResponse.PropertyBean propertyResponse) {
                 chatView.showPropertyData(propertyResponse);
             }
 
             @Override
-            public void onChatPropertyTypeResponse(PropertyTypeResponse propertyTypeResponse) {
+            public void onChatPropertyTypeResponse(ChatResponse.PropertyTypeBean propertyTypeResponse) {
                 chatView.showPropertyTypeData(propertyTypeResponse);
             }
 

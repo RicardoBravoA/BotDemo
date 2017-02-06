@@ -15,9 +15,8 @@ import com.rba.botdemo.R;
 import com.rba.botdemo.base.BaseActivity;
 import com.rba.botdemo.model.entity.ChatButtonEntity;
 import com.rba.botdemo.model.entity.MessageEntity;
+import com.rba.botdemo.model.response.ChatResponse;
 import com.rba.botdemo.model.response.OperationResponse;
-import com.rba.botdemo.model.response.PropertyResponse;
-import com.rba.botdemo.model.response.PropertyTypeResponse;
 import com.rba.botdemo.util.Constant;
 
 import java.util.ArrayList;
@@ -131,12 +130,12 @@ public class ChatActivity extends BaseActivity implements ChatView {
     }
 
     @Override
-    public void showPropertyData(PropertyResponse propertyResponse) {
+    public void showPropertyData(ChatResponse.PropertyBean propertyResponse) {
 
     }
 
     @Override
-    public void showPropertyTypeData(PropertyTypeResponse propertyTypeResponse) {
+    public void showPropertyTypeData(ChatResponse.PropertyTypeBean propertyTypeResponse) {
 
     }
 

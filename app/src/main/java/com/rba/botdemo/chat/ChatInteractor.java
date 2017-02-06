@@ -9,8 +9,6 @@ import com.rba.botdemo.api.NetworkError;
 import com.rba.botdemo.model.response.ChatResponse;
 import com.rba.botdemo.model.response.ErrorResponse;
 import com.rba.botdemo.model.response.OperationResponse;
-import com.rba.botdemo.model.response.PropertyResponse;
-import com.rba.botdemo.model.response.PropertyTypeResponse;
 import com.rba.botdemo.util.Constant;
 
 import java.util.Map;
@@ -67,44 +65,43 @@ public class ChatInteractor {
 
                     @Override
                     public void onNext(Object o) {
-                        ChatResponse chatResponse = new Gson().fromJson(new Gson().toJson(o), ChatResponse.class);
-                        Log.i("z- type", chatResponse.getType());
-
-                        if(chatResponse.getType().equals(Constant.TAG_OPERATION)){
-                            OperationResponse operationResponse
-                                    = new Gson().fromJson(
-                                    new Gson().toJson(o), OperationResponse.class);
-                            Log.i("z- data", new Gson().toJson(operationResponse));
-                            callback.onChatOperationResponse(operationResponse);
-                        } else if(chatResponse.getType().equals(Constant.TAG_PROPERTY_TYPE)){
-                            PropertyTypeResponse propertyTypeResponse
-                                    = new Gson().fromJson(
-                                    new Gson().toJson(o), PropertyTypeResponse.class);
-                            Log.i("z- data", new Gson().toJson(propertyTypeResponse));
-                            callback.onChatPropertyTypeResponse(propertyTypeResponse);
-                        } else if(chatResponse.getType().equals(Constant.TAG_PROPERTY)){
-                            PropertyResponse propertyResponse
-                                    = new Gson().fromJson(
-                                    new Gson().toJson(o), PropertyResponse.class);
-                            Log.i("z- data", new Gson().toJson(propertyResponse));
-                            callback.onChatPropertyResponse(propertyResponse);
-                        }
-
-                        /*
-                        if(o instanceof ChatResponse){
-                            ChatResponse chatResponse = (ChatResponse) o;
-                            Log.i("z- chatResponse", new Gson().toJson(chatResponse));
-                        }else if(o instanceof PropertyTypeResponse){
-                            PropertyTypeResponse propertyTypeResponse = (PropertyTypeResponse) o;
-                            Log.i("z- propertyTypeResponse", new Gson().toJson(propertyTypeResponse));
-                        }else if(o instanceof PropertyResponse){
-                            PropertyResponse propertyResponse = (PropertyResponse) o;
-                            Log.i("z- chatResponse", new Gson().toJson(propertyResponse));
-                        }
-                        */
-
+                        nextData(new Gson().toJson(o), callback);
                     }
                 });
+
+    }
+
+    private void nextData(String myObject, ChatCallback callback){
+        Log.i("z- myObject", myObject);
+        ChatResponse chatResponse = new Gson().fromJson(myObject, ChatResponse.class);
+        Log.i("z- type", chatResponse.getType());
+        Log.i("z- data", new Gson().toJson(chatResponse));
+        Log.i("z- data", myObject);
+
+
+
+        if(chatResponse.getType().equals(Constant.TAG_OPERATION)){
+            Log.i("z- data", myObject);
+            OperationResponse operationResponse
+                    = new Gson().fromJson(
+                    myObject, OperationResponse.class);
+            Log.i("z- data operation", new Gson().toJson(operationResponse));
+            callback.onChatOperationResponse(operationResponse);
+        } else if(chatResponse.getType().equals(Constant.TAG_PROPERTY_TYPE)){
+            Log.i("z- data", myObject);
+            PropertyTypeResponse propertyTypeResponse
+                    = new Gson().fromJson(
+                    myObject, PropertyTypeResponse.class);
+            Log.i("z- data propertyType", new Gson().toJson(propertyTypeResponse));
+            callback.onChatPropertyTypeResponse(propertyTypeResponse);
+        } else if(chatResponse.getType().equals(Constant.TAG_PROPERTY)){
+            Log.i("z- data", myObject);
+            PropertyResponse propertyResponse
+                    = new Gson().fromJson(
+                    myObject, PropertyResponse.class);
+            Log.i("z- data property", new Gson().toJson(propertyResponse));
+            callback.onChatPropertyResponse(propertyResponse);
+        }
 
     }
 

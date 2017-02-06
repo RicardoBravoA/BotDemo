@@ -9,7 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.rba.botdemo.R;
-import com.rba.botdemo.model.response.PropertyResponse;
+import com.rba.botdemo.model.response.ChatResponse;
 import com.squareup.picasso.Picasso;
 
 import java.util.List;
@@ -24,11 +24,11 @@ import butterknife.ButterKnife;
 public class PropertyAdapter extends RecyclerView.Adapter<PropertyAdapter.PropertyViewHolder> {
 
     private Context context;
-    private List<PropertyResponse.PropertyBean> propertyResponseList;
+    private List<ChatResponse.PropertyBean> propertyResponseList;
     static LayoutInflater inflater = null;
 
 
-    public PropertyAdapter(Context context, List<PropertyResponse.PropertyBean> propertyResponseList) {
+    public PropertyAdapter(Context context, List<ChatResponse.PropertyBean> propertyResponseList) {
         if(context!=null){
             this.context = context;
             inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
@@ -45,7 +45,7 @@ public class PropertyAdapter extends RecyclerView.Adapter<PropertyAdapter.Proper
     @Override
     public void onBindViewHolder(PropertyViewHolder holder, int position) {
 
-        PropertyResponse.PropertyBean propertyResponse = propertyResponseList.get(position);
+        ChatResponse.PropertyBean propertyResponse = propertyResponseList.get(position);
         holder.lblTitle.setText(propertyResponse.getTitle());
         holder.lblPrice.setText(propertyResponse.getPrice());
 

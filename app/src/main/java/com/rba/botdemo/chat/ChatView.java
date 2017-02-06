@@ -1,11 +1,8 @@
 package com.rba.botdemo.chat;
 
 import com.rba.botdemo.model.entity.ChatButtonEntity;
+import com.rba.botdemo.model.response.ChatResponse;
 import com.rba.botdemo.model.response.OperationResponse;
-import com.rba.botdemo.model.response.PropertyResponse;
-import com.rba.botdemo.model.response.PropertyTypeResponse;
-
-import java.util.Map;
 
 /**
  * Created by Ricardo Bravo on 3/02/17.
@@ -19,9 +16,9 @@ public interface ChatView {
 
     void showOperationData(OperationResponse operationResponse);
 
-    void showPropertyData(PropertyResponse propertyResponse);
+    void showPropertyData(ChatResponse.PropertyBean propertyResponse);
 
-    void showPropertyTypeData(PropertyTypeResponse propertyTypeResponse);
+    void showPropertyTypeData(ChatResponse.PropertyTypeBean propertyTypeResponse);
 
     void showMessageError(String error);
 
