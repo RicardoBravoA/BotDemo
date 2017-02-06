@@ -1,6 +1,7 @@
 package com.rba.botdemo.di;
 
 import com.rba.botdemo.api.NetworkModule;
+import com.rba.botdemo.chat.ChatActivity;
 import com.rba.botdemo.synchronize.SynchronizeActivity;
 
 import javax.inject.Singleton;
@@ -17,5 +18,7 @@ import dagger.Component;
 public interface BotComponent {
 
     void injectSynchronize(SynchronizeActivity synchronizeActivity);
+
+    void injectChat(ChatActivity chatActivity);
 
 }

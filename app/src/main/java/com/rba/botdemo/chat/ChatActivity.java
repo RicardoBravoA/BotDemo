@@ -1,6 +1,8 @@
 package com.rba.botdemo.chat;
 
 import android.os.Bundle;
+import android.support.design.widget.CoordinatorLayout;
+import android.support.design.widget.Snackbar;
 import android.support.v7.widget.AppCompatEditText;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
@@ -11,11 +13,14 @@ import android.widget.Toast;
 import com.rba.botdemo.R;
 import com.rba.botdemo.base.BaseActivity;
 import com.rba.botdemo.model.entity.ChatButtonEntity;
-import com.rba.botdemo.model.entity.MessageEntity;
-import com.rba.botdemo.model.response.SynchronizeResponse;
+import com.rba.botdemo.model.response.ChatResponse;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+
+import javax.inject.Inject;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -26,9 +31,16 @@ public class ChatActivity extends BaseActivity implements ChatView {
     @BindView(R.id.toolbar) Toolbar toolbar;
     @BindView(R.id.rcvChat) RecyclerView rcvChat;
     @BindView(R.id.txtMessage) AppCompatEditText txtMessage;
+    @BindView(R.id.clGeneral) CoordinatorLayout clGeneral;
     private ChatAdapter chatAdapter;
     private ChatPresenter chatPresenter;
     private List<Object> objectList = new ArrayList<>();
+    private Map<String, String> data = new HashMap<>();
+    @Inject
+    ChatInteractor chatInteractor;
+    private String id = "0";
+    private String operation_id = "0";
+    private String property_id = "0";
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -41,7 +53,7 @@ public class ChatActivity extends BaseActivity implements ChatView {
 
     @Override
     public void init() {
-
+        getBotComponent().injectChat(this);
         ButterKnife.bind(this);
         setSupportActionBar(toolbar);
 
@@ -51,9 +63,10 @@ public class ChatActivity extends BaseActivity implements ChatView {
         rcvChat.setAdapter(chatAdapter);
         rcvChat.setItemAnimator(new DefaultItemAnimator());
 
-        chatPresenter = new ChatPresenter(this);
+        chatPresenter = new ChatPresenter(chatInteractor, this);
 
 
+        /*
         for(int i = 0; i < 4; i++){
             MessageEntity messageEntity = new MessageEntity();
             if(i % 2 == 0){
@@ -73,6 +86,7 @@ public class ChatActivity extends BaseActivity implements ChatView {
         }
 
         chatAdapter.addData(objectList);
+        */
 
 
     }
@@ -82,15 +96,33 @@ public class ChatActivity extends BaseActivity implements ChatView {
         Toast.makeText(this, "position "+pos+" - "+chatButtonEntity.getDescription(), Toast.LENGTH_SHORT).show();
     }
 
+    @Override
+    public void showData(ChatResponse chatResponse) {
+
+    }
+
+    @Override
+    public void showMessageError(String error) {
+        Snackbar.make(clGeneral, error, Snackbar.LENGTH_LONG).show();
+    }
+
     @OnClick(R.id.imgSend)
     public void onClickSend(){
         String message = txtMessage.getText().toString().trim();
         if(chatPresenter.validMessage(message)){
+            //data.clear();
+            data.put("message", message);
+            data.put("id", id);
+            data.put("operation_id", operation_id);
+            data.put("property_id", property_id);
+            chatPresenter.sendMessage(data);
+            /*
             objectList.add(new MessageEntity(0, message));
             objectList.add(new MessageEntity(1, message));
             rcvChat.smoothScrollToPosition(objectList.size() - 1);
             chatAdapter.notifyItemInserted(objectList.size()-2);
             chatAdapter.notifyItemInserted(objectList.size()-1);
+            */
         }
 
     }

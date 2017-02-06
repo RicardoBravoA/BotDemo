@@ -5,7 +5,6 @@ import com.rba.botdemo.model.response.ChatResponse;
 import com.rba.botdemo.model.response.ErrorResponse;
 import com.rba.botdemo.util.Util;
 
-import java.util.HashMap;
 import java.util.Map;
 
 import rx.Subscription;
