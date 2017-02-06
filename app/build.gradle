@@ -22,6 +22,7 @@ android {
             buildConfigField "String", "BASE_URL", '"http://172.18.60.67:8888/BotApi/v1/"'
 
             buildConfigField "String", "URL_SYNCHRONIZE", '"synchronize/"'
+            buildConfigField "String", "URL_MESSAGE", '"message/"'
         }
 
     }
