@@ -9,8 +9,9 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.rba.botdemo.R;
-import com.rba.botdemo.model.response.ChatResponse;
+import com.rba.botdemo.model.response.PropertyBean;
 import com.squareup.picasso.Picasso;
+
 
 import java.util.List;
 
@@ -24,15 +25,15 @@ import butterknife.ButterKnife;
 public class PropertyAdapter extends RecyclerView.Adapter<PropertyAdapter.PropertyViewHolder> {
 
     private Context context;
-    private List<ChatResponse.PropertyBean> propertyResponseList;
+    private List<PropertyBean> propertyBeanList;
     static LayoutInflater inflater = null;
 
 
-    public PropertyAdapter(Context context, List<ChatResponse.PropertyBean> propertyResponseList) {
+    public PropertyAdapter(Context context, List<PropertyBean> propertyBeanList) {
         if(context!=null){
             this.context = context;
             inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            this.propertyResponseList = propertyResponseList;
+            this.propertyBeanList = propertyBeanList;
         }
     }
 
@@ -45,7 +46,7 @@ public class PropertyAdapter extends RecyclerView.Adapter<PropertyAdapter.Proper
     @Override
     public void onBindViewHolder(PropertyViewHolder holder, int position) {
 
-        ChatResponse.PropertyBean propertyResponse = propertyResponseList.get(position);
+        PropertyBean propertyResponse = propertyBeanList.get(position);
         holder.lblTitle.setText(propertyResponse.getTitle());
         holder.lblPrice.setText(propertyResponse.getPrice());
 
@@ -59,7 +60,7 @@ public class PropertyAdapter extends RecyclerView.Adapter<PropertyAdapter.Proper
 
     @Override
     public int getItemCount() {
-        return propertyResponseList.size();
+        return propertyBeanList.size();
     }
 
     class PropertyViewHolder extends RecyclerView.ViewHolder {

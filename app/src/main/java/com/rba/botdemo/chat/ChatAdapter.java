@@ -2,6 +2,8 @@ package com.rba.botdemo.chat;
 
 import android.content.Context;
 import android.support.v7.widget.AppCompatTextView;
+import android.support.v7.widget.DefaultItemAnimator;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -91,6 +93,22 @@ public class ChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
             Log.i("z- chatButtonEntity", new Gson().toJson(chatButtonEntity));
             buttonViewHolder.chbGeneral.addChatButton(chatButtonEntity);
             Log.i("z- ChatButtonEntity", ""+position);
+        }else if(objectList.get(position) instanceof PropertyEntity){
+            PropertyViewHolder propertyViewHolder = (PropertyViewHolder) holder;
+            PropertyEntity propertyEntity = (PropertyEntity) objectList.get(position);
+            Log.i("z- propertyEntity", new Gson().toJson(propertyEntity));
+            Log.i("z- ChatButtonEntity", ""+position);
+
+            //recycler view aqui
+
+            LinearLayoutManager layoutManager = new LinearLayoutManager(context,
+                    LinearLayoutManager.HORIZONTAL, false);
+            propertyViewHolder.rcvProperty.setLayoutManager(layoutManager);
+            PropertyAdapter propertyAdapter = new PropertyAdapter(context, propertyEntity.getProperty());
+            propertyViewHolder.rcvProperty.setAdapter(propertyAdapter);
+            propertyViewHolder.rcvProperty.setItemAnimator(new DefaultItemAnimator());
+            propertyAdapter.notifyDataSetChanged();
+
         }
 
     }
