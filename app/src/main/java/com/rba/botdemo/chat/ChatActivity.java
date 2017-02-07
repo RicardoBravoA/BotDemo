@@ -15,6 +15,7 @@ import com.rba.botdemo.R;
 import com.rba.botdemo.base.BaseActivity;
 import com.rba.botdemo.model.entity.ChatButtonEntity;
 import com.rba.botdemo.model.entity.MessageEntity;
+import com.rba.botdemo.model.entity.PropertyEntity;
 import com.rba.botdemo.model.response.ChatResponse;
 import com.rba.botdemo.util.Constant;
 
@@ -138,6 +139,28 @@ public class ChatActivity extends BaseActivity implements ChatView {
     public void showPropertyData(ChatResponse chatResponse) {
         Log.i("z- showPropertyData", new Gson().toJson(chatResponse));
 
+        if(!chatResponse.getMessage().getResponse_1().isEmpty()){
+            MessageEntity messageEntity = new MessageEntity();
+            messageEntity.setType(Constant.TAG_RECEIPT);
+            messageEntity.setMessage(chatResponse.getMessage().getResponse_1());
+
+            objectList.add(messageEntity);
+            chatAdapter.addData(objectList);
+            chatAdapter.notifyItemInserted(objectList.size()-1);
+        }
+
+        if(!chatResponse.getMessage().getResponse_2().isEmpty()){
+            MessageEntity messageEntity = new MessageEntity();
+            messageEntity.setType(Constant.TAG_RECEIPT);
+            messageEntity.setMessage(chatResponse.getMessage().getResponse_2());
+            objectList.add(messageEntity);
+            chatAdapter.addData(objectList);
+            chatAdapter.notifyItemInserted(objectList.size()-1);
+        }
+
+        PropertyEntity propertyEntity = new PropertyEntity();
+        propertyEntity.setProperty(chatResponse.getProperty());
+        objectList.add(propertyEntity);
 
 
     }

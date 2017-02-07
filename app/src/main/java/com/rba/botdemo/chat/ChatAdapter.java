@@ -14,6 +14,7 @@ import com.rba.botdemo.component.chatbutton.ChatButtonOnClick;
 import com.rba.botdemo.component.chatbutton.ChatRadioGroup;
 import com.rba.botdemo.model.entity.ChatButtonEntity;
 import com.rba.botdemo.model.entity.MessageEntity;
+import com.rba.botdemo.model.entity.PropertyEntity;
 import com.rba.botdemo.util.Constant;
 
 import java.util.ArrayList;
@@ -46,16 +47,10 @@ public class ChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
         }else if(objectList.get(position) instanceof ChatButtonEntity){
             return Constant.TAG_BUTTON;
+        }else if(objectList.get(position) instanceof PropertyEntity){
+            return Constant.TAG_SHOW_PROPERTY;
         }
-        /*
-        else if (objectList.get(position) instanceof ErrorEntity) {
-            return Constant.TAG_ERROR;
-        } else if (objectList.get(position) instanceof LoadingEntity) {
-            return Constant.TAG_LOADING;
-        } else {
-            return -1;
-        }
-        */return 0;
+        return 0;
     }
 
     @Override
@@ -71,23 +66,11 @@ public class ChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         } else if(viewType == Constant.TAG_BUTTON){
             view = LayoutInflater.from(context).inflate(R.layout.item_chat_radio_group, parent, false);
             return new ButtonViewHolder(view);
+        } else if(viewType == Constant.TAG_SHOW_PROPERTY){
+            view = LayoutInflater.from(context).inflate(R.layout.content_property, parent, false);
+            return new PropertyViewHolder(view);
         }
 
-        /*
-        switch (viewType) {
-            case Constant.TAG_ITEM:
-                view = LayoutInflater.from(searchFragment.getContext()).inflate(R.layout.item_job_offer, parent, false);
-                return new ItemViewHolder(view);
-            case Constant.TAG_ERROR:
-                view = LayoutInflater.from(searchFragment.getContext()).inflate(R.layout.item_job_error, parent, false);
-                return new ErrorViewHolder(view);
-            case Constant.TAG_LOADING:
-                view = LayoutInflater.from(searchFragment.getContext()).inflate(R.layout.item_job_loading, parent, false);
-                return new LoadingViewHolder(view);
-            default:
-                return null;
-        }
-        */
         return null;
     }
 
