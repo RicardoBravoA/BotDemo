@@ -72,25 +72,23 @@ public class ChatActivity extends BaseActivity implements ChatView {
     }
 
     @Override
-    public void onClickChatButton(ChatButtonEntity chatButtonEntity) {
+    public void onClickChatButton(ChatButtonEntity.ChatButtonBean chatButtonBean) {
 
-        if(chatButtonEntity.getType().equals(Constant.TAG_OPERATION)){
-            id = chatButtonEntity.getId();
+        if(chatButtonBean.getType().equals(Constant.TAG_OPERATION)){
+            id = chatButtonBean.getId();
             message = Constant.TAG_OPERATION;
             send();
-        } else if(chatButtonEntity.getType().equals(Constant.TAG_PROPERTY_TYPE)){
+        } else if(chatButtonBean.getType().equals(Constant.TAG_PROPERTY_TYPE)){
             message = Constant.TAG_PROPERTY;
             operation_id = id;
-            id = chatButtonEntity.getId();
-            property_id = chatButtonEntity.getId();
+            id = chatButtonBean.getId();
+            property_id = chatButtonBean.getId();
             send();
-        } else if(chatButtonEntity.getType().equals(Constant.TAG_PROPERTY)){
-            property_id = chatButtonEntity.getId();
+        } else if(chatButtonBean.getType().equals(Constant.TAG_PROPERTY)){
+            property_id = chatButtonBean.getId();
         }
 
-
-
-        Log.i("z- onClick", new Gson().toJson(chatButtonEntity));
+        Log.i("z- onClick", new Gson().toJson(chatButtonBean));
     }
 
     @Override
@@ -116,16 +114,20 @@ public class ChatActivity extends BaseActivity implements ChatView {
             chatAdapter.notifyItemInserted(objectList.size()-1);
         }
 
-        List<ChatButtonEntity> chatButtonEntityList = new ArrayList<>();
+        List<ChatButtonEntity.ChatButtonBean> chatButtonEntityList = new ArrayList<>();
 
         for(ChatResponse.OperationBean operationBean
                 : chatResponse.getOperation()){
-            chatButtonEntityList.add(new ChatButtonEntity(Constant.TAG_OPERATION,
-                    operationBean.getOperation_id(),
-                    operationBean.getOperation_description()));
+            ChatButtonEntity.ChatButtonBean chatButtonBean = new ChatButtonEntity.ChatButtonBean();
+            chatButtonBean.setId(Constant.TAG_OPERATION);
+            chatButtonBean.setType(operationBean.getOperation_id());
+            chatButtonBean.setDescription(operationBean.getOperation_description());
+            chatButtonEntityList.add(chatButtonBean);
         }
+        ChatButtonEntity chatButtonEntity = new ChatButtonEntity();
+        chatButtonEntity.setChatButtonBeen(chatButtonEntityList);
+        objectList.add(chatButtonEntity);
 
-        objectList.addAll(chatButtonEntityList);
         chatAdapter.addData(objectList);
         chatAdapter.notifyItemInserted(objectList.size()-1);
 
@@ -143,6 +145,7 @@ public class ChatActivity extends BaseActivity implements ChatView {
     @Override
     public void showPropertyTypeData(ChatResponse chatResponse) {
         Log.i("z- showPropertyTypeData", new Gson().toJson(chatResponse));
+
         if(!chatResponse.getMessage().getResponse_1().isEmpty()){
             MessageEntity messageEntity = new MessageEntity();
             messageEntity.setType(Constant.TAG_RECEIPT);
@@ -162,16 +165,20 @@ public class ChatActivity extends BaseActivity implements ChatView {
             chatAdapter.notifyItemInserted(objectList.size()-1);
         }
 
-        List<ChatButtonEntity> chatButtonEntityList = new ArrayList<>();
+        List<ChatButtonEntity.ChatButtonBean> chatButtonEntityList = new ArrayList<>();
 
         for(ChatResponse.PropertyTypeBean propertyTypeBean
                 : chatResponse.getProperty_type()){
-            chatButtonEntityList.add(new ChatButtonEntity(Constant.TAG_PROPERTY_TYPE,
-                    propertyTypeBean.getProperty_id(),
-                    propertyTypeBean.getProperty_description()));
+            ChatButtonEntity.ChatButtonBean chatButtonBean = new ChatButtonEntity.ChatButtonBean();
+            chatButtonBean.setId(Constant.TAG_PROPERTY_TYPE);
+            chatButtonBean.setType(propertyTypeBean.getProperty_id());
+            chatButtonBean.setDescription(propertyTypeBean.getProperty_description());
+            chatButtonEntityList.add(chatButtonBean);
         }
+        ChatButtonEntity chatButtonEntity = new ChatButtonEntity();
+        chatButtonEntity.setChatButtonBeen(chatButtonEntityList);
+        objectList.add(chatButtonEntity);
 
-        objectList.addAll(chatButtonEntityList);
         chatAdapter.addData(objectList);
         chatAdapter.notifyItemInserted(objectList.size()-1);
     }
