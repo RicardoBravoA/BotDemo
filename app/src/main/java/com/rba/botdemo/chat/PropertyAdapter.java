@@ -48,7 +48,7 @@ public class PropertyAdapter extends RecyclerView.Adapter<PropertyAdapter.Proper
 
         PropertyBean propertyResponse = propertyBeanList.get(position);
         holder.lblTitle.setText(propertyResponse.getTitle());
-        holder.lblPrice.setText(propertyResponse.getPrice());
+        holder.lblPrice.setText(propertyResponse.getMoney_type()+" "+propertyResponse.getPrice());
 
         Picasso.with(context)
                 .load(propertyResponse.getImage())
