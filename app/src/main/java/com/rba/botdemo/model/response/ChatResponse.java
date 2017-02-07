@@ -17,6 +17,7 @@ public class ChatResponse {
     private MetaBean _meta;
     private String type;
     private MessageBean message;
+    private List<PropertyBean> property;
 
     public MetaBean get_meta() {
         return _meta;
@@ -40,6 +41,14 @@ public class ChatResponse {
 
     public void setMessage(MessageBean message) {
         this.message = message;
+    }
+
+    public List<PropertyBean> getProperty() {
+        return property;
+    }
+
+    public void setProperty(List<PropertyBean> property) {
+        this.property = property;
     }
 
     public static class MetaBean {
@@ -146,27 +155,62 @@ public class ChatResponse {
         }
     }
 
+    private List<OperationBean> operation;
 
-    private List<PropertyBean> property;
-
-    public List<PropertyBean> getProperty() {
-        return property;
+    public List<OperationBean> getOperation() {
+        return operation;
     }
 
-    public void setProperty(List<PropertyBean> property) {
-        this.property = property;
+    public void setOperation(List<OperationBean> operation) {
+        this.operation = operation;
+    }
+
+    public static class OperationBean {
+        /**
+         * operation_type_id : 1
+         * operation_id : venta
+         * operation_description : Venta
+         */
+
+        private int operation_type_id;
+        private String operation_id;
+        private String operation_description;
+
+        public int getOperation_type_id() {
+            return operation_type_id;
+        }
+
+        public void setOperation_type_id(int operation_type_id) {
+            this.operation_type_id = operation_type_id;
+        }
+
+        public String getOperation_id() {
+            return operation_id;
+        }
+
+        public void setOperation_id(String operation_id) {
+            this.operation_id = operation_id;
+        }
+
+        public String getOperation_description() {
+            return operation_description;
+        }
+
+        public void setOperation_description(String operation_description) {
+            this.operation_description = operation_description;
+        }
     }
 
     public static class PropertyBean {
         /**
-         * property_id : 5
-         * image : http://cde.urbania.pe/elements/34517/proyectos/2587/galery/2587-15066442.jpg
-         * title : Proyecto Gran La Mar
-         * price : 70,850
+         * property_id : 2
+         * image : http://cde.urbania.pe/elements/123410/proyectos/2138/galery/2138-11411084.jpg
+         * title : Proyecto QUEBRADA DEL MAR
+         * price : 222,000
          * money_type : US$
-         * url : http://urbania.pe/ficha-proyecto/proyecto-gran-la-mar-lima-pueblo-libre-bluhouse-asesores-2587
-         * operation_type_id : 1
-         * property_type_id : 2
+         * url : http://urbania.pe/ficha-proyecto/proyecto-quebrada-del-mar-lima-asia-armas-doomo-inmobiliaria-2138
+         * operation_type_id : venta
+         * property_type_id : casa
          */
 
         private int property_id;
@@ -175,8 +219,8 @@ public class ChatResponse {
         private String price;
         private String money_type;
         private String url;
-        private int operation_type_id;
-        private int property_type_id;
+        private String operation_type_id;
+        private String property_type_id;
 
         public int getProperty_id() {
             return property_id;
@@ -226,67 +270,20 @@ public class ChatResponse {
             this.url = url;
         }
 
-        public int getOperation_type_id() {
+        public String getOperation_type_id() {
             return operation_type_id;
         }
 
-        public void setOperation_type_id(int operation_type_id) {
+        public void setOperation_type_id(String operation_type_id) {
             this.operation_type_id = operation_type_id;
         }
 
-        public int getProperty_type_id() {
+        public String getProperty_type_id() {
             return property_type_id;
         }
 
-        public void setProperty_type_id(int property_type_id) {
+        public void setProperty_type_id(String property_type_id) {
             this.property_type_id = property_type_id;
         }
     }
-
-    private List<OperationBean> operation;
-
-    public List<OperationBean> getOperation() {
-        return operation;
-    }
-
-    public void setOperation(List<OperationBean> operation) {
-        this.operation = operation;
-    }
-
-    public static class OperationBean {
-        /**
-         * operation_type_id : 1
-         * operation_id : venta
-         * operation_description : Venta
-         */
-
-        private int operation_type_id;
-        private String operation_id;
-        private String operation_description;
-
-        public int getOperation_type_id() {
-            return operation_type_id;
-        }
-
-        public void setOperation_type_id(int operation_type_id) {
-            this.operation_type_id = operation_type_id;
-        }
-
-        public String getOperation_id() {
-            return operation_id;
-        }
-
-        public void setOperation_id(String operation_id) {
-            this.operation_id = operation_id;
-        }
-
-        public String getOperation_description() {
-            return operation_description;
-        }
-
-        public void setOperation_description(String operation_description) {
-            this.operation_description = operation_description;
-        }
-    }
-
 }

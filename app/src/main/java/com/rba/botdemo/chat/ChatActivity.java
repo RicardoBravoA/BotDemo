@@ -77,9 +77,13 @@ public class ChatActivity extends BaseActivity implements ChatView {
         if(chatButtonEntity.getType().equals(Constant.TAG_OPERATION)){
             id = chatButtonEntity.getId();
             message = Constant.TAG_OPERATION;
-
             send();
-
+        } else if(chatButtonEntity.getType().equals(Constant.TAG_PROPERTY_TYPE)){
+            message = Constant.TAG_PROPERTY;
+            operation_id = id;
+            id = chatButtonEntity.getId();
+            property_id = chatButtonEntity.getId();
+            send();
         } else if(chatButtonEntity.getType().equals(Constant.TAG_PROPERTY)){
             property_id = chatButtonEntity.getId();
         }
@@ -131,11 +135,45 @@ public class ChatActivity extends BaseActivity implements ChatView {
     @Override
     public void showPropertyData(ChatResponse chatResponse) {
         Log.i("z- showPropertyData", new Gson().toJson(chatResponse));
+
+
+
     }
 
     @Override
     public void showPropertyTypeData(ChatResponse chatResponse) {
         Log.i("z- showPropertyTypeData", new Gson().toJson(chatResponse));
+        if(!chatResponse.getMessage().getResponse_1().isEmpty()){
+            MessageEntity messageEntity = new MessageEntity();
+            messageEntity.setType(Constant.TAG_RECEIPT);
+            messageEntity.setMessage(chatResponse.getMessage().getResponse_1());
+
+            objectList.add(messageEntity);
+            chatAdapter.addData(objectList);
+            chatAdapter.notifyItemInserted(objectList.size()-1);
+        }
+
+        if(!chatResponse.getMessage().getResponse_2().isEmpty()){
+            MessageEntity messageEntity = new MessageEntity();
+            messageEntity.setType(Constant.TAG_RECEIPT);
+            messageEntity.setMessage(chatResponse.getMessage().getResponse_2());
+            objectList.add(messageEntity);
+            chatAdapter.addData(objectList);
+            chatAdapter.notifyItemInserted(objectList.size()-1);
+        }
+
+        List<ChatButtonEntity> chatButtonEntityList = new ArrayList<>();
+
+        for(ChatResponse.PropertyTypeBean propertyTypeBean
+                : chatResponse.getProperty_type()){
+            chatButtonEntityList.add(new ChatButtonEntity(Constant.TAG_PROPERTY_TYPE,
+                    propertyTypeBean.getProperty_id(),
+                    propertyTypeBean.getProperty_description()));
+        }
+
+        objectList.addAll(chatButtonEntityList);
+        chatAdapter.addData(objectList);
+        chatAdapter.notifyItemInserted(objectList.size()-1);
     }
 
     @Override
