@@ -74,6 +74,8 @@ public class ChatActivity extends BaseActivity implements ChatView {
     @Override
     public void onClickChatButton(ChatButtonEntity.ChatButtonBean chatButtonBean) {
 
+        Log.i("z- onClick", new Gson().toJson(chatButtonBean));
+
         if(chatButtonBean.getType().equals(Constant.TAG_OPERATION)){
             id = chatButtonBean.getId();
             message = Constant.TAG_OPERATION;
@@ -87,8 +89,6 @@ public class ChatActivity extends BaseActivity implements ChatView {
         } else if(chatButtonBean.getType().equals(Constant.TAG_PROPERTY)){
             property_id = chatButtonBean.getId();
         }
-
-        Log.i("z- onClick", new Gson().toJson(chatButtonBean));
     }
 
     @Override
@@ -119,8 +119,8 @@ public class ChatActivity extends BaseActivity implements ChatView {
         for(ChatResponse.OperationBean operationBean
                 : chatResponse.getOperation()){
             ChatButtonEntity.ChatButtonBean chatButtonBean = new ChatButtonEntity.ChatButtonBean();
-            chatButtonBean.setId(Constant.TAG_OPERATION);
-            chatButtonBean.setType(operationBean.getOperation_id());
+            chatButtonBean.setId(operationBean.getOperation_id());
+            chatButtonBean.setType(Constant.TAG_OPERATION);
             chatButtonBean.setDescription(operationBean.getOperation_description());
             chatButtonEntityList.add(chatButtonBean);
         }
@@ -170,8 +170,8 @@ public class ChatActivity extends BaseActivity implements ChatView {
         for(ChatResponse.PropertyTypeBean propertyTypeBean
                 : chatResponse.getProperty_type()){
             ChatButtonEntity.ChatButtonBean chatButtonBean = new ChatButtonEntity.ChatButtonBean();
-            chatButtonBean.setId(Constant.TAG_PROPERTY_TYPE);
-            chatButtonBean.setType(propertyTypeBean.getProperty_id());
+            chatButtonBean.setId(propertyTypeBean.getProperty_id());
+            chatButtonBean.setType(Constant.TAG_PROPERTY_TYPE);
             chatButtonBean.setDescription(propertyTypeBean.getProperty_description());
             chatButtonEntityList.add(chatButtonBean);
         }
