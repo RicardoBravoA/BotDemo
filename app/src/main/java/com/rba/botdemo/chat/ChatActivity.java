@@ -107,6 +107,7 @@ public class ChatActivity extends BaseActivity implements ChatView {
             objectList.add(messageEntity);
             chatAdapter.addData(objectList);
             chatAdapter.notifyItemInserted(objectList.size()-1);
+            rcvChat.smoothScrollToPosition(objectList.size()-1);
         }
 
         if(!chatResponse.getMessage().getResponse_2().isEmpty()){
@@ -116,6 +117,7 @@ public class ChatActivity extends BaseActivity implements ChatView {
             objectList.add(messageEntity);
             chatAdapter.addData(objectList);
             chatAdapter.notifyItemInserted(objectList.size()-1);
+            rcvChat.smoothScrollToPosition(objectList.size()-1);
         }
 
         List<ChatButtonEntity.ChatButtonBean> chatButtonEntityList = new ArrayList<>();
@@ -134,7 +136,7 @@ public class ChatActivity extends BaseActivity implements ChatView {
 
         chatAdapter.addData(objectList);
         chatAdapter.notifyItemInserted(objectList.size()-1);
-
+        rcvChat.smoothScrollToPosition(objectList.size()-1);
 
     }
 
@@ -150,6 +152,7 @@ public class ChatActivity extends BaseActivity implements ChatView {
             objectList.add(messageEntity);
             chatAdapter.addData(objectList);
             chatAdapter.notifyItemInserted(objectList.size()-1);
+            rcvChat.smoothScrollToPosition(objectList.size()-1);
         }
 
         if(!chatResponse.getMessage().getResponse_2().isEmpty()){
@@ -159,11 +162,14 @@ public class ChatActivity extends BaseActivity implements ChatView {
             objectList.add(messageEntity);
             chatAdapter.addData(objectList);
             chatAdapter.notifyItemInserted(objectList.size()-1);
+            rcvChat.smoothScrollToPosition(objectList.size()-1);
         }
 
         PropertyEntity propertyEntity = new PropertyEntity();
         propertyEntity.setProperty(chatResponse.getProperty());
         objectList.add(propertyEntity);
+        chatAdapter.notifyItemInserted(objectList.size()-1);
+        rcvChat.smoothScrollToPosition(objectList.size()-1);
 
 
     }
@@ -180,6 +186,7 @@ public class ChatActivity extends BaseActivity implements ChatView {
             objectList.add(messageEntity);
             chatAdapter.addData(objectList);
             chatAdapter.notifyItemInserted(objectList.size()-1);
+            rcvChat.smoothScrollToPosition(objectList.size()-1);
         }
 
         if(!chatResponse.getMessage().getResponse_2().isEmpty()){
@@ -189,6 +196,7 @@ public class ChatActivity extends BaseActivity implements ChatView {
             objectList.add(messageEntity);
             chatAdapter.addData(objectList);
             chatAdapter.notifyItemInserted(objectList.size()-1);
+            rcvChat.smoothScrollToPosition(objectList.size()-1);
         }
 
         List<ChatButtonEntity.ChatButtonBean> chatButtonEntityList = new ArrayList<>();
@@ -207,6 +215,7 @@ public class ChatActivity extends BaseActivity implements ChatView {
 
         chatAdapter.addData(objectList);
         chatAdapter.notifyItemInserted(objectList.size()-1);
+        rcvChat.smoothScrollToPosition(objectList.size()-1);
     }
 
     @Override
@@ -235,6 +244,7 @@ public class ChatActivity extends BaseActivity implements ChatView {
         id = "";
         operation_id = "";
         property_id = "";
+        txtMessage.setText("");
     }
 
     @OnClick(R.id.imgSend)
@@ -250,6 +260,7 @@ public class ChatActivity extends BaseActivity implements ChatView {
             chatAdapter.notifyItemInserted(objectList.size()-1);
 
             send();
+            txtMessage.setText("");
         }
 
     }

@@ -10,7 +10,7 @@
 
     <item android:right="1dp">
         <shape android:shape="rectangle">
-            <solid android:color="@color/colorPlumb" />
+            <solid android:color="@color/colorNoSelected" />
         </shape>
     </item>
 
