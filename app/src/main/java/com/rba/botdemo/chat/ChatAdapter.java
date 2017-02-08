@@ -90,9 +90,10 @@ public class ChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         }else if(objectList.get(position) instanceof  ChatButtonEntity){
             ButtonViewHolder buttonViewHolder = (ButtonViewHolder) holder;
             ChatButtonEntity chatButtonEntity = (ChatButtonEntity) objectList.get(position);
-            Log.i("z- chatButtonEntity", new Gson().toJson(chatButtonEntity));
+            Log.i("x- chatButtonEntity a", new Gson().toJson(chatButtonEntity));
+            buttonViewHolder.chbGeneral.clear();
             buttonViewHolder.chbGeneral.addChatButton(chatButtonEntity);
-            Log.i("z- ChatButtonEntity", ""+position);
+            Log.i("x- ChatButtonEntity a", ""+position);
         }else if(objectList.get(position) instanceof PropertyEntity){
             PropertyViewHolder propertyViewHolder = (PropertyViewHolder) holder;
             PropertyEntity propertyEntity = (PropertyEntity) objectList.get(position);

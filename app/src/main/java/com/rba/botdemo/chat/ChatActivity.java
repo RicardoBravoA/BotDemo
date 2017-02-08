@@ -47,6 +47,7 @@ public class ChatActivity extends BaseActivity implements ChatView {
     private String message = "";
     private String operation = "";
     private String propertyType = "";
+    private List<ChatButtonEntity.ChatButtonBean> chatButtonEntityList = new ArrayList<>();
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -86,7 +87,7 @@ public class ChatActivity extends BaseActivity implements ChatView {
 
             removeItem(objectList.size()-1);
             showMessagerUser(getString(R.string.user_message_operation, operation));
-
+            chatButtonEntityList.clear();
             send();
 
         } else if(chatButtonBean.getType().equals(Constant.TAG_PROPERTY_TYPE)){
@@ -98,6 +99,7 @@ public class ChatActivity extends BaseActivity implements ChatView {
 
             removeItem(objectList.size()-1);
             showMessagerUser(propertyType);
+            chatButtonEntityList.clear();
 
             send();
 
@@ -145,6 +147,7 @@ public class ChatActivity extends BaseActivity implements ChatView {
 
     @Override
     public void removeItem(int position) {
+        Log.i("x- remove", new Gson().toJson(objectList.get(position)));
         objectList.remove(position);
         chatAdapter.notifyItemRemoved(position);
         rcvChat.smoothScrollToPosition(position);
@@ -167,6 +170,8 @@ public class ChatActivity extends BaseActivity implements ChatView {
 
     @Override
     public void showResult(ChatResponse chatResponse, int value) {
+
+        Log.i("x- chatResponse", new Gson().toJson(chatResponse));
 
         if(!chatResponse.getMessage().getResponse_1().isEmpty()){
             MessageEntity messageEntity = new MessageEntity();
@@ -192,8 +197,6 @@ public class ChatActivity extends BaseActivity implements ChatView {
 
         if(value == Constant.TAG_OPERATION_BUTTON){
 
-            List<ChatButtonEntity.ChatButtonBean> chatButtonEntityList = new ArrayList<>();
-
             for(ChatResponse.OperationBean operationBean
                     : chatResponse.getOperation()){
                 ChatButtonEntity.ChatButtonBean chatButtonBean = new ChatButtonEntity.ChatButtonBean();
@@ -204,22 +207,12 @@ public class ChatActivity extends BaseActivity implements ChatView {
             ChatButtonEntity chatButtonEntity = new ChatButtonEntity();
             chatButtonEntity.setChatButtonBeen(chatButtonEntityList);
             objectList.add(chatButtonEntity);
-
+            Log.i("x- objectList btn", new Gson().toJson(objectList));
             chatAdapter.addData(objectList);
             chatAdapter.notifyItemInserted(objectList.size()-1);
             rcvChat.smoothScrollToPosition(objectList.size()-1);
 
-        }else if(value == Constant.TAG_SHOW_PROPERTY){
-
-            PropertyEntity propertyEntity = new PropertyEntity();
-            propertyEntity.setProperty(chatResponse.getProperty());
-            objectList.add(propertyEntity);
-            chatAdapter.notifyItemInserted(objectList.size()-1);
-            rcvChat.smoothScrollToPosition(objectList.size()-1);
-
         }else if(value == Constant.TAG_PROPERTY_TYPE_BUTTON){
-
-            List<ChatButtonEntity.ChatButtonBean> chatButtonEntityList = new ArrayList<>();
 
             for(ChatResponse.PropertyTypeBean propertyTypeBean
                     : chatResponse.getProperty_type()){
@@ -231,8 +224,16 @@ public class ChatActivity extends BaseActivity implements ChatView {
             ChatButtonEntity chatButtonEntity = new ChatButtonEntity();
             chatButtonEntity.setChatButtonBeen(chatButtonEntityList);
             objectList.add(chatButtonEntity);
-
+            Log.i("x- objectList btn", new Gson().toJson(objectList));
             chatAdapter.addData(objectList);
+            chatAdapter.notifyItemInserted(objectList.size()-1);
+            rcvChat.smoothScrollToPosition(objectList.size()-1);
+
+        }else if(value == Constant.TAG_SHOW_PROPERTY){
+
+            PropertyEntity propertyEntity = new PropertyEntity();
+            propertyEntity.setProperty(chatResponse.getProperty());
+            objectList.add(propertyEntity);
             chatAdapter.notifyItemInserted(objectList.size()-1);
             rcvChat.smoothScrollToPosition(objectList.size()-1);
 

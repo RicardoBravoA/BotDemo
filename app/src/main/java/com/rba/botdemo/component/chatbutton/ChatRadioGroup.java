@@ -95,16 +95,24 @@ public class ChatRadioGroup extends RadioGroup {
             });
 
             radioButton.setLayoutParams(layoutParams);
-            addView(radioButton);
+            addView(view);
 
         }
 
     }
 
     public void addChatButton(ChatButtonEntity chatButtonEntity) {
-        Log.i("z- chatButtonEntity", new Gson().toJson(chatButtonEntity));
+        Log.i("z- chatButtonEntity rg", new Gson().toJson(chatButtonEntity));
         chatButtonBeanList.addAll(chatButtonEntity.getChatButtonBeen());
         drawButton();
+    }
+
+    public void clear(){
+        if(!chatButtonBeanList.isEmpty()){
+            chatButtonBeanList.clear();
+        }
+        removeAllViews();
+        
     }
 
 }
