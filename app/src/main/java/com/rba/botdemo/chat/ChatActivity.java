@@ -45,9 +45,6 @@ public class ChatActivity extends BaseActivity implements ChatView {
     @Inject
     ChatInteractor chatInteractor;
     private String message = "";
-    private String id = "0";
-    private String operationId = "0";
-    private String propertyId = "0";
     private String operation = "";
     private String propertyType = "";
 
@@ -83,28 +80,24 @@ public class ChatActivity extends BaseActivity implements ChatView {
 
         if(chatButtonBean.getType().equals(Constant.TAG_OPERATION)){
 
-            id = chatButtonBean.getId();
-            message = Constant.TAG_OPERATION;
-            Log.i("z- operation", ""+id+" - "+message);
+            operation = chatButtonBean.getId();
+            message = "";
+            Log.i("z- operation", ""+operation+" - "+message);
 
             removeItem(objectList.size()-1);
-            showMessagerUser(getString(R.string.user_message_operation, id));
+            showMessagerUser(getString(R.string.user_message_operation, operation));
 
             send();
 
         } else if(chatButtonBean.getType().equals(Constant.TAG_PROPERTY_TYPE)){
 
-            message = Constant.TAG_PROPERTY;
-            operationId = id;
-            id = chatButtonBean.getId();
-            propertyId = chatButtonBean.getId();
+            message = "";
+            propertyType = chatButtonBean.getId();
 
-            Log.i("z- propertyType", ""+id+" - "+message+" - "+operationId+" - "+propertyId);
-
-            propertyType = id;
+            Log.i("z- propertyType", ""+propertyType+" - "+message+" - "+operation);
 
             removeItem(objectList.size()-1);
-            showMessagerUser(id);
+            showMessagerUser(propertyType);
 
             send();
 
@@ -161,9 +154,8 @@ public class ChatActivity extends BaseActivity implements ChatView {
     public void send() {
         Map<String, String> data = new HashMap<>();
         data.put("message", message);
-        data.put("id", id);
-        data.put("operation_id", operationId);
-        data.put("property_id", propertyId);
+        data.put("operation", operation);
+        data.put("property_type", propertyType);
 
         chatPresenter.sendMessage(data);
     }
@@ -251,15 +243,19 @@ public class ChatActivity extends BaseActivity implements ChatView {
 
     @Override
     public void clear() {
-        id = "";
-        operationId = "";
-        propertyId = "";
+        message = "";
+        operation = "";
+        propertyType = "";
         txtMessage.setText("");
     }
 
     @OnClick(R.id.imgSend)
     public void onClickSend(){
         message = txtMessage.getText().toString().trim();
+
+        operation = "";
+        propertyType = "";
+
         if(chatPresenter.validMessage(message)){
 
             showMessagerUser(message);
