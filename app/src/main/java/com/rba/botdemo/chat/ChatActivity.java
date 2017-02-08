@@ -1,5 +1,7 @@
 package com.rba.botdemo.chat;
 
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.Snackbar;
@@ -17,6 +19,7 @@ import com.rba.botdemo.model.entity.ChatButtonEntity;
 import com.rba.botdemo.model.entity.MessageEntity;
 import com.rba.botdemo.model.entity.PropertyEntity;
 import com.rba.botdemo.model.response.ChatResponse;
+import com.rba.botdemo.model.response.PropertyBean;
 import com.rba.botdemo.util.Constant;
 
 import java.util.ArrayList;
@@ -220,6 +223,11 @@ public class ChatActivity extends BaseActivity implements ChatView {
         data.put("property_id", property_id);
 
         chatPresenter.sendMessage(data);
+    }
+
+    @Override
+    public void onClickProperty(PropertyBean propertyBean) {
+        startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(propertyBean.getUrl())));
     }
 
     @Override

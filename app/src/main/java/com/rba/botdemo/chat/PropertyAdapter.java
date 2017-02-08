@@ -17,6 +17,7 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 /**
  * Created by Ricardo Bravo on 6/02/17.
@@ -27,14 +28,13 @@ public class PropertyAdapter extends RecyclerView.Adapter<PropertyAdapter.Proper
     private Context context;
     private List<PropertyBean> propertyBeanList;
     static LayoutInflater inflater = null;
+    private ChatView chatView;
 
-
-    public PropertyAdapter(Context context, List<PropertyBean> propertyBeanList) {
-        if(context!=null){
-            this.context = context;
-            inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            this.propertyBeanList = propertyBeanList;
-        }
+    public PropertyAdapter(Context context, List<PropertyBean> propertyBeanList, ChatView chatView) {
+        this.context = context;
+        this.chatView = chatView;
+        inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        this.propertyBeanList = propertyBeanList;
     }
 
     @Override
@@ -72,6 +72,11 @@ public class PropertyAdapter extends RecyclerView.Adapter<PropertyAdapter.Proper
         public PropertyViewHolder(View view) {
             super(view);
             ButterKnife.bind(this, view);
+        }
+
+        @OnClick(R.id.cvProperty)
+        public void onClickProperty(){
+            chatView.onClickProperty(propertyBeanList.get(getAdapterPosition()));
         }
 
     }

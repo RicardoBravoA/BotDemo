@@ -104,7 +104,7 @@ public class ChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
             LinearLayoutManager layoutManager = new LinearLayoutManager(context,
                     LinearLayoutManager.HORIZONTAL, false);
             propertyViewHolder.rcvProperty.setLayoutManager(layoutManager);
-            PropertyAdapter propertyAdapter = new PropertyAdapter(context, propertyEntity.getProperty());
+            PropertyAdapter propertyAdapter = new PropertyAdapter(context, propertyEntity.getProperty(), chatView);
             propertyViewHolder.rcvProperty.setAdapter(propertyAdapter);
             propertyViewHolder.rcvProperty.setItemAnimator(new DefaultItemAnimator());
             propertyAdapter.notifyDataSetChanged();
