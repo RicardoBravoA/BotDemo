@@ -83,6 +83,9 @@ public class ChatActivity extends BaseActivity implements ChatView {
         if(chatButtonBean.getType().equals(Constant.TAG_OPERATION)){
             id = chatButtonBean.getId();
             message = Constant.TAG_OPERATION;
+
+
+
             send();
         } else if(chatButtonBean.getType().equals(Constant.TAG_PROPERTY_TYPE)){
             message = Constant.TAG_PROPERTY;
@@ -99,44 +102,7 @@ public class ChatActivity extends BaseActivity implements ChatView {
     public void showOperationData(ChatResponse chatResponse) {
         response_type_id = chatResponse.getMessage().getResponse_type_id();
 
-        if(!chatResponse.getMessage().getResponse_1().isEmpty()){
-            MessageEntity messageEntity = new MessageEntity();
-            messageEntity.setType(Constant.TAG_RECEIPT);
-            messageEntity.setMessage(chatResponse.getMessage().getResponse_1());
-
-            objectList.add(messageEntity);
-            chatAdapter.addData(objectList);
-            chatAdapter.notifyItemInserted(objectList.size()-1);
-            rcvChat.smoothScrollToPosition(objectList.size()-1);
-        }
-
-        if(!chatResponse.getMessage().getResponse_2().isEmpty()){
-            MessageEntity messageEntity = new MessageEntity();
-            messageEntity.setType(Constant.TAG_RECEIPT);
-            messageEntity.setMessage(chatResponse.getMessage().getResponse_2());
-            objectList.add(messageEntity);
-            chatAdapter.addData(objectList);
-            chatAdapter.notifyItemInserted(objectList.size()-1);
-            rcvChat.smoothScrollToPosition(objectList.size()-1);
-        }
-
-        List<ChatButtonEntity.ChatButtonBean> chatButtonEntityList = new ArrayList<>();
-
-        for(ChatResponse.OperationBean operationBean
-                : chatResponse.getOperation()){
-            ChatButtonEntity.ChatButtonBean chatButtonBean = new ChatButtonEntity.ChatButtonBean();
-            chatButtonBean.setId(operationBean.getOperation_id());
-            chatButtonBean.setType(Constant.TAG_OPERATION);
-            chatButtonBean.setDescription(operationBean.getOperation_description());
-            chatButtonEntityList.add(chatButtonBean);
-        }
-        ChatButtonEntity chatButtonEntity = new ChatButtonEntity();
-        chatButtonEntity.setChatButtonBeen(chatButtonEntityList);
-        objectList.add(chatButtonEntity);
-
-        chatAdapter.addData(objectList);
-        chatAdapter.notifyItemInserted(objectList.size()-1);
-        rcvChat.smoothScrollToPosition(objectList.size()-1);
+        showResult(chatResponse, Constant.TAG_OPERATION_BUTTON);
 
     }
 
@@ -144,33 +110,7 @@ public class ChatActivity extends BaseActivity implements ChatView {
     public void showPropertyData(ChatResponse chatResponse) {
         Log.i("z- showPropertyData", new Gson().toJson(chatResponse));
 
-        if(!chatResponse.getMessage().getResponse_1().isEmpty()){
-            MessageEntity messageEntity = new MessageEntity();
-            messageEntity.setType(Constant.TAG_RECEIPT);
-            messageEntity.setMessage(chatResponse.getMessage().getResponse_1());
-
-            objectList.add(messageEntity);
-            chatAdapter.addData(objectList);
-            chatAdapter.notifyItemInserted(objectList.size()-1);
-            rcvChat.smoothScrollToPosition(objectList.size()-1);
-        }
-
-        if(!chatResponse.getMessage().getResponse_2().isEmpty()){
-            MessageEntity messageEntity = new MessageEntity();
-            messageEntity.setType(Constant.TAG_RECEIPT);
-            messageEntity.setMessage(chatResponse.getMessage().getResponse_2());
-            objectList.add(messageEntity);
-            chatAdapter.addData(objectList);
-            chatAdapter.notifyItemInserted(objectList.size()-1);
-            rcvChat.smoothScrollToPosition(objectList.size()-1);
-        }
-
-        PropertyEntity propertyEntity = new PropertyEntity();
-        propertyEntity.setProperty(chatResponse.getProperty());
-        objectList.add(propertyEntity);
-        chatAdapter.notifyItemInserted(objectList.size()-1);
-        rcvChat.smoothScrollToPosition(objectList.size()-1);
-
+        showResult(chatResponse, Constant.TAG_SHOW_PROPERTY);
 
     }
 
@@ -178,44 +118,8 @@ public class ChatActivity extends BaseActivity implements ChatView {
     public void showPropertyTypeData(ChatResponse chatResponse) {
         Log.i("z- showPropertyTypeData", new Gson().toJson(chatResponse));
 
-        if(!chatResponse.getMessage().getResponse_1().isEmpty()){
-            MessageEntity messageEntity = new MessageEntity();
-            messageEntity.setType(Constant.TAG_RECEIPT);
-            messageEntity.setMessage(chatResponse.getMessage().getResponse_1());
+        showResult(chatResponse, Constant.TAG_PROPERTY_TYPE_BUTTON);
 
-            objectList.add(messageEntity);
-            chatAdapter.addData(objectList);
-            chatAdapter.notifyItemInserted(objectList.size()-1);
-            rcvChat.smoothScrollToPosition(objectList.size()-1);
-        }
-
-        if(!chatResponse.getMessage().getResponse_2().isEmpty()){
-            MessageEntity messageEntity = new MessageEntity();
-            messageEntity.setType(Constant.TAG_RECEIPT);
-            messageEntity.setMessage(chatResponse.getMessage().getResponse_2());
-            objectList.add(messageEntity);
-            chatAdapter.addData(objectList);
-            chatAdapter.notifyItemInserted(objectList.size()-1);
-            rcvChat.smoothScrollToPosition(objectList.size()-1);
-        }
-
-        List<ChatButtonEntity.ChatButtonBean> chatButtonEntityList = new ArrayList<>();
-
-        for(ChatResponse.PropertyTypeBean propertyTypeBean
-                : chatResponse.getProperty_type()){
-            ChatButtonEntity.ChatButtonBean chatButtonBean = new ChatButtonEntity.ChatButtonBean();
-            chatButtonBean.setId(propertyTypeBean.getProperty_id());
-            chatButtonBean.setType(Constant.TAG_PROPERTY_TYPE);
-            chatButtonBean.setDescription(propertyTypeBean.getProperty_description());
-            chatButtonEntityList.add(chatButtonBean);
-        }
-        ChatButtonEntity chatButtonEntity = new ChatButtonEntity();
-        chatButtonEntity.setChatButtonBeen(chatButtonEntityList);
-        objectList.add(chatButtonEntity);
-
-        chatAdapter.addData(objectList);
-        chatAdapter.notifyItemInserted(objectList.size()-1);
-        rcvChat.smoothScrollToPosition(objectList.size()-1);
     }
 
     @Override
@@ -237,6 +141,77 @@ public class ChatActivity extends BaseActivity implements ChatView {
     @Override
     public void onClickProperty(PropertyBean propertyBean) {
         startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(propertyBean.getUrl())));
+    }
+
+    @Override
+    public void showResult(ChatResponse chatResponse, int value) {
+
+        if(!chatResponse.getMessage().getResponse_1().isEmpty()){
+            MessageEntity messageEntity = new MessageEntity();
+            messageEntity.setType(Constant.TAG_RECEIPT);
+            messageEntity.setMessage(chatResponse.getMessage().getResponse_1());
+
+            objectList.add(messageEntity);
+            chatAdapter.addData(objectList);
+            chatAdapter.notifyItemInserted(objectList.size()-1);
+            rcvChat.smoothScrollToPosition(objectList.size()-1);
+        }
+
+        if(!chatResponse.getMessage().getResponse_2().isEmpty()){
+            MessageEntity messageEntity = new MessageEntity();
+            messageEntity.setType(Constant.TAG_RECEIPT);
+            messageEntity.setMessage(chatResponse.getMessage().getResponse_2());
+            objectList.add(messageEntity);
+            chatAdapter.addData(objectList);
+            chatAdapter.notifyItemInserted(objectList.size()-1);
+            rcvChat.smoothScrollToPosition(objectList.size()-1);
+        }
+
+        if(value == Constant.TAG_OPERATION_BUTTON){
+            List<ChatButtonEntity.ChatButtonBean> chatButtonEntityList = new ArrayList<>();
+
+            for(ChatResponse.OperationBean operationBean
+                    : chatResponse.getOperation()){
+                ChatButtonEntity.ChatButtonBean chatButtonBean = new ChatButtonEntity.ChatButtonBean();
+                chatButtonBean.setId(operationBean.getOperation_id());
+                chatButtonBean.setType(Constant.TAG_OPERATION);
+                chatButtonBean.setDescription(operationBean.getOperation_description());
+                chatButtonEntityList.add(chatButtonBean);
+            }
+            ChatButtonEntity chatButtonEntity = new ChatButtonEntity();
+            chatButtonEntity.setChatButtonBeen(chatButtonEntityList);
+            objectList.add(chatButtonEntity);
+
+            chatAdapter.addData(objectList);
+            chatAdapter.notifyItemInserted(objectList.size()-1);
+            rcvChat.smoothScrollToPosition(objectList.size()-1);
+        }else if(value == Constant.TAG_SHOW_PROPERTY){
+            PropertyEntity propertyEntity = new PropertyEntity();
+            propertyEntity.setProperty(chatResponse.getProperty());
+            objectList.add(propertyEntity);
+            chatAdapter.notifyItemInserted(objectList.size()-1);
+            rcvChat.smoothScrollToPosition(objectList.size()-1);
+        }else if(value == Constant.TAG_PROPERTY_TYPE_BUTTON){
+            List<ChatButtonEntity.ChatButtonBean> chatButtonEntityList = new ArrayList<>();
+
+            for(ChatResponse.PropertyTypeBean propertyTypeBean
+                    : chatResponse.getProperty_type()){
+                ChatButtonEntity.ChatButtonBean chatButtonBean = new ChatButtonEntity.ChatButtonBean();
+                chatButtonBean.setId(propertyTypeBean.getProperty_id());
+                chatButtonBean.setType(Constant.TAG_PROPERTY_TYPE);
+                chatButtonBean.setDescription(propertyTypeBean.getProperty_description());
+                chatButtonEntityList.add(chatButtonBean);
+            }
+            ChatButtonEntity chatButtonEntity = new ChatButtonEntity();
+            chatButtonEntity.setChatButtonBeen(chatButtonEntityList);
+            objectList.add(chatButtonEntity);
+
+            chatAdapter.addData(objectList);
+            chatAdapter.notifyItemInserted(objectList.size()-1);
+            rcvChat.smoothScrollToPosition(objectList.size()-1);
+        }
+
+
     }
 
     @Override

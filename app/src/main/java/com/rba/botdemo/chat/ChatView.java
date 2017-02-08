@@ -26,6 +26,8 @@ public interface ChatView {
 
     void onClickProperty(PropertyBean propertyBean);
 
+    void showResult(ChatResponse chatResponse, int value);
+
     void clear();
 
 }
