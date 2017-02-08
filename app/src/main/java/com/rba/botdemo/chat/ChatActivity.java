@@ -104,7 +104,6 @@ public class ChatActivity extends BaseActivity implements ChatView {
             propertyType = id;
 
             removeItem(objectList.size()-1);
-
             showMessagerUser(id);
 
             send();
@@ -206,9 +205,8 @@ public class ChatActivity extends BaseActivity implements ChatView {
             for(ChatResponse.OperationBean operationBean
                     : chatResponse.getOperation()){
                 ChatButtonEntity.ChatButtonBean chatButtonBean = new ChatButtonEntity.ChatButtonBean();
-                chatButtonBean.setId(operationBean.getOperation_id());
+                chatButtonBean.setId(operationBean.getOperation());
                 chatButtonBean.setType(Constant.TAG_OPERATION);
-                chatButtonBean.setDescription(operationBean.getOperation_description());
                 chatButtonEntityList.add(chatButtonBean);
             }
             ChatButtonEntity chatButtonEntity = new ChatButtonEntity();
@@ -234,9 +232,8 @@ public class ChatActivity extends BaseActivity implements ChatView {
             for(ChatResponse.PropertyTypeBean propertyTypeBean
                     : chatResponse.getProperty_type()){
                 ChatButtonEntity.ChatButtonBean chatButtonBean = new ChatButtonEntity.ChatButtonBean();
-                chatButtonBean.setId(propertyTypeBean.getProperty_id());
+                chatButtonBean.setId(propertyTypeBean.getProperty_type());
                 chatButtonBean.setType(Constant.TAG_PROPERTY_TYPE);
-                chatButtonBean.setDescription(propertyTypeBean.getProperty_description());
                 chatButtonEntityList.add(chatButtonBean);
             }
             ChatButtonEntity chatButtonEntity = new ChatButtonEntity();

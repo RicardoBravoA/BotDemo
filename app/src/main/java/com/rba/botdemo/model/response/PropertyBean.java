@@ -22,8 +22,8 @@ public class PropertyBean {
     private String price;
     private String money_type;
     private String url;
-    private String operation_type_id;
-    private String property_type_id;
+    private String operationType;
+    private String propertyType;
 
     public int getProperty_id() {
         return property_id;
@@ -73,19 +73,19 @@ public class PropertyBean {
         this.url = url;
     }
 
-    public String getOperation_type_id() {
-        return operation_type_id;
+    public String getOperationType() {
+        return operationType;
     }
 
-    public void setOperation_type_id(String operation_type_id) {
-        this.operation_type_id = operation_type_id;
+    public void setOperationType(String operationType) {
+        this.operationType = operationType;
     }
 
-    public String getProperty_type_id() {
-        return property_type_id;
+    public String getPropertyType() {
+        return propertyType;
     }
 
-    public void setProperty_type_id(String property_type_id) {
-        this.property_type_id = property_type_id;
+    public void setPropertyType(String propertyType) {
+        this.propertyType = propertyType;
     }
 }

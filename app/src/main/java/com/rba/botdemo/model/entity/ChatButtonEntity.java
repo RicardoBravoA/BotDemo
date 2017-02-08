@@ -20,17 +20,8 @@ public class ChatButtonEntity {
 
     public static class ChatButtonBean {
 
-        String type;
         String id;
-        String description;
-
-        public String getType() {
-            return type;
-        }
-
-        public void setType(String type) {
-            this.type = type;
-        }
+        String type;
 
         public String getId() {
             return id;
@@ -40,17 +31,13 @@ public class ChatButtonEntity {
             this.id = id;
         }
 
-        public String getDescription() {
-            return description;
+        public String getType() {
+            return type;
         }
 
-        public void setDescription(String description) {
-            this.description = description;
+        public void setType(String type) {
+            this.type = type;
         }
-
     }
-
-
-
 
 }

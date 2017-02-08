@@ -76,7 +76,7 @@ public class ChatRadioGroup extends RadioGroup {
             View view = mInflater.inflate(R.layout.item_chat_radio_button, null);
             AppCompatRadioButton radioButton = (AppCompatRadioButton) view.findViewById(R.id.rbt);
             radioButton.setId(i);
-            radioButton.setText(chatButtonBean.getDescription());
+            radioButton.setText(chatButtonBean.getId());
 
             int value10 = Util.dpToPx(10, getContext());
 

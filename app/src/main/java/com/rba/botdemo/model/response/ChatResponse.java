@@ -121,37 +121,17 @@ public class ChatResponse extends PropertyBean {
 
     public static class PropertyTypeBean {
         /**
-         * property_type_id : 1.0
-         * property_id : casa
-         * property_description : Casa
+         * property_type : casa
          */
 
-        private double property_type_id;
-        private String property_id;
-        private String property_description;
+        private String property_type;
 
-        public double getProperty_type_id() {
-            return property_type_id;
+        public String getProperty_type() {
+            return property_type;
         }
 
-        public void setProperty_type_id(double property_type_id) {
-            this.property_type_id = property_type_id;
-        }
-
-        public String getProperty_id() {
-            return property_id;
-        }
-
-        public void setProperty_id(String property_id) {
-            this.property_id = property_id;
-        }
-
-        public String getProperty_description() {
-            return property_description;
-        }
-
-        public void setProperty_description(String property_description) {
-            this.property_description = property_description;
+        public void setProperty_type(String property_type) {
+            this.property_type = property_type;
         }
     }
 
@@ -167,37 +147,17 @@ public class ChatResponse extends PropertyBean {
 
     public static class OperationBean {
         /**
-         * operation_type_id : 1
-         * operation_id : venta
-         * operation_description : Venta
+         * operation : venta
          */
 
-        private int operation_type_id;
-        private String operation_id;
-        private String operation_description;
+        private String operation;
 
-        public int getOperation_type_id() {
-            return operation_type_id;
+        public String getOperation() {
+            return operation;
         }
 
-        public void setOperation_type_id(int operation_type_id) {
-            this.operation_type_id = operation_type_id;
-        }
-
-        public String getOperation_id() {
-            return operation_id;
-        }
-
-        public void setOperation_id(String operation_id) {
-            this.operation_id = operation_id;
-        }
-
-        public String getOperation_description() {
-            return operation_description;
-        }
-
-        public void setOperation_description(String operation_description) {
-            this.operation_description = operation_description;
+        public void setOperation(String operation) {
+            this.operation = operation;
         }
     }
 
