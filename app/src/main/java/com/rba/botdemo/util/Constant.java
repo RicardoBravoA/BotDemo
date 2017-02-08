@@ -19,5 +19,9 @@ public class Constant {
     public static final String TAG_OPERATION = "operation";
     public static final String TAG_PROPERTY_TYPE = "property_type";
     public static final String TAG_PROPERTY = "property";
+    public static final String TAG_SALE = "venta";
+    public static final String TAG_BUY = "comprar";
+    public static final String TAG_RENTAL = "alquiler";
+    public static final String TAG_RENT = "alquilar";
 
 }

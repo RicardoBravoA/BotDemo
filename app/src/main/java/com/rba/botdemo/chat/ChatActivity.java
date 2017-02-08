@@ -48,6 +48,8 @@ public class ChatActivity extends BaseActivity implements ChatView {
     private String id = "0";
     private String operationId = "0";
     private String propertyId = "0";
+    private String operation = "";
+    private String propertyType = "";
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -80,18 +82,32 @@ public class ChatActivity extends BaseActivity implements ChatView {
         Log.i("z- onClick", new Gson().toJson(chatButtonBean));
 
         if(chatButtonBean.getType().equals(Constant.TAG_OPERATION)){
+
             id = chatButtonBean.getId();
             message = Constant.TAG_OPERATION;
+            Log.i("z- operation", ""+id+" - "+message);
+
+            operation = id;
+
             removeItem(objectList.size()-1);
 
+            if(id.equals(Constant.TAG_SALE)){
+                showMessagerUser(getString(R.string.user_message_operation, Constant.TAG_BUY));
+            }else{
+                showMessagerUser(getString(R.string.user_message_operation, Constant.TAG_RENT));
+            }
+
             send();
+
         } else if(chatButtonBean.getType().equals(Constant.TAG_PROPERTY_TYPE)){
+
             message = Constant.TAG_PROPERTY;
             operationId = id;
             id = chatButtonBean.getId();
             propertyId = chatButtonBean.getId();
 
             send();
+
         }
 
     }
@@ -183,6 +199,7 @@ public class ChatActivity extends BaseActivity implements ChatView {
 
 
         if(value == Constant.TAG_OPERATION_BUTTON){
+
             List<ChatButtonEntity.ChatButtonBean> chatButtonEntityList = new ArrayList<>();
 
             for(ChatResponse.OperationBean operationBean
