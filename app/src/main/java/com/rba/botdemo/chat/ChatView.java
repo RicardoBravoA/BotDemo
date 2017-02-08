@@ -24,6 +24,8 @@ public interface ChatView {
 
     void showMessagerUser(String message);
 
+    void removeItem(int position);
+
     void send();
 
     void onClickProperty(PropertyBean propertyBean);

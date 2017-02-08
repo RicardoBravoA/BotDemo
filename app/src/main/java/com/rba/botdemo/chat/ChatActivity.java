@@ -82,10 +82,7 @@ public class ChatActivity extends BaseActivity implements ChatView {
         if(chatButtonBean.getType().equals(Constant.TAG_OPERATION)){
             id = chatButtonBean.getId();
             message = Constant.TAG_OPERATION;
-
-            //objectList.remove(objectList.size()-1);
-            //chatAdapter.notifyItemRemoved(objectList.size()-1);
-
+            removeItem(objectList.size()-1);
 
             send();
         } else if(chatButtonBean.getType().equals(Constant.TAG_PROPERTY_TYPE)){
@@ -135,6 +132,13 @@ public class ChatActivity extends BaseActivity implements ChatView {
         objectList.add(messageEntity);
         chatAdapter.addData(objectList);
         chatAdapter.notifyItemInserted(objectList.size()-1);
+    }
+
+    @Override
+    public void removeItem(int position) {
+        objectList.remove(position);
+        chatAdapter.notifyItemRemoved(position);
+        rcvChat.smoothScrollToPosition(position);
     }
 
     @Override
