@@ -22,6 +22,8 @@ public interface ChatView {
 
     void showMessageError(String error);
 
+    void showMessagerUser(String message);
+
     void send();
 
     void onClickProperty(PropertyBean propertyBean);
