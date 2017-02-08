@@ -48,7 +48,6 @@ public class ChatActivity extends BaseActivity implements ChatView {
     private String id = "0";
     private String operation_id = "0";
     private String property_id = "0";
-    private int response_type_id = 0;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -100,7 +99,6 @@ public class ChatActivity extends BaseActivity implements ChatView {
 
     @Override
     public void showOperationData(ChatResponse chatResponse) {
-        response_type_id = chatResponse.getMessage().getResponse_type_id();
 
         showResult(chatResponse, Constant.TAG_OPERATION_BUTTON);
 
