@@ -1,8 +1,5 @@
 <resources>
     <string name="app_name">BotDemo</string>
     <string name="action_settings">Settings</string>
-    <string name="user_message_operation">Quiero %1$s un inmueble</string>
-    <string name="user_message_conector_simple">un</string>
-    <string name="user_message_conector_plural">una</string>
-    <string name="user_message_property">Quiero %1$s %2$s %3$s</string>
+    <string name="user_message_operation">%1$s un inmueble</string>
 </resources>

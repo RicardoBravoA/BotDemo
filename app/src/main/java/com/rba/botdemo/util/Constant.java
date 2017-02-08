@@ -23,5 +23,7 @@ public class Constant {
     public static final String TAG_BUY = "comprar";
     public static final String TAG_RENTAL = "alquiler";
     public static final String TAG_RENT = "alquilar";
+    public static final String TAG_HOME = "casa";
+    public static final String TAG_APARTMENT = "departamento";
 
 }

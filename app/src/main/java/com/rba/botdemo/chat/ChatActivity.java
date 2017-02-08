@@ -87,15 +87,8 @@ public class ChatActivity extends BaseActivity implements ChatView {
             message = Constant.TAG_OPERATION;
             Log.i("z- operation", ""+id+" - "+message);
 
-            operation = id;
-
             removeItem(objectList.size()-1);
-
-            if(id.equals(Constant.TAG_SALE)){
-                showMessagerUser(getString(R.string.user_message_operation, Constant.TAG_BUY));
-            }else{
-                showMessagerUser(getString(R.string.user_message_operation, Constant.TAG_RENT));
-            }
+            showMessagerUser(getString(R.string.user_message_operation, id));
 
             send();
 
@@ -105,6 +98,14 @@ public class ChatActivity extends BaseActivity implements ChatView {
             operationId = id;
             id = chatButtonBean.getId();
             propertyId = chatButtonBean.getId();
+
+            Log.i("z- propertyType", ""+id+" - "+message+" - "+operationId+" - "+propertyId);
+
+            propertyType = id;
+
+            removeItem(objectList.size()-1);
+
+            showMessagerUser(id);
 
             send();
 
