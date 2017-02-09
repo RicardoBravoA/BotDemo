@@ -1,5 +1,8 @@
 package com.rba.botdemo.chat;
 
+import android.util.Log;
+
+import com.google.gson.Gson;
 import com.rba.botdemo.api.NetworkError;
 import com.rba.botdemo.model.response.ChatResponse;
 import com.rba.botdemo.model.response.ErrorResponse;
@@ -47,11 +50,13 @@ public class ChatPresenter {
 
             @Override
             public void onChatError(ErrorResponse errorResponse) {
+                Log.i("z- onChatError", new Gson().toJson(errorResponse));
                 chatView.showMessageError(errorResponse.get_meta().getStatus());
             }
 
             @Override
             public void onChatFailure(NetworkError networkError) {
+                Log.i("z- onChatFailure", new Gson().toJson(networkError));
                 chatView.showMessageError(networkError.getMessage());
             }
         });
