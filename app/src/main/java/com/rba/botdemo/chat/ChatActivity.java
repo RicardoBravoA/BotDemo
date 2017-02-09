@@ -12,6 +12,7 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 
+import com.crashlytics.android.Crashlytics;
 import com.google.gson.Gson;
 import com.rba.botdemo.R;
 import com.rba.botdemo.base.BaseActivity;
@@ -32,6 +33,7 @@ import javax.inject.Inject;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import io.fabric.sdk.android.Fabric;
 
 public class ChatActivity extends BaseActivity implements ChatView {
 
@@ -62,6 +64,7 @@ public class ChatActivity extends BaseActivity implements ChatView {
     public void init() {
         getBotComponent().injectChat(this);
         ButterKnife.bind(this);
+        Fabric.with(this, new Crashlytics());
         setSupportActionBar(toolbar);
 
         LinearLayoutManager layoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
