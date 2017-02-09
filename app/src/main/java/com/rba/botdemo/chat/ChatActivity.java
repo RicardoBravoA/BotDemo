@@ -248,6 +248,7 @@ public class ChatActivity extends BaseActivity implements ChatView {
         operation = "";
         propertyType = "";
         txtMessage.setText("");
+        chatButtonEntityList.clear();
     }
 
     @OnClick(R.id.imgSend)
@@ -256,6 +257,7 @@ public class ChatActivity extends BaseActivity implements ChatView {
 
         operation = "";
         propertyType = "";
+        chatButtonEntityList.clear();
 
         if(chatPresenter.validMessage(message)){
 
