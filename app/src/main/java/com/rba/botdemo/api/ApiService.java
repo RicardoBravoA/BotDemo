@@ -18,9 +18,6 @@ import rx.Observable;
 
 public interface ApiService {
 
-    @GET(BuildConfig.URL_SYNCHRONIZE)
-    Observable<SynchronizeResponse> getSynchronize();
-
     @FormUrlEncoded
     @POST(BuildConfig.URL_MESSAGE)
     Observable<ChatResponse> postMessage(@FieldMap Map<String, String> data);

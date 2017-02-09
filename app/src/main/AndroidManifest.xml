@@ -12,20 +12,21 @@
         android:theme="@style/AppTheme">
 
         <activity
-            android:name=".synchronize.SynchronizeActivity"
-            android:theme="@style/AppTheme.NoActionBar"
-            android:noHistory="true">
+            android:name=".chat.ChatActivity"
+            android:label="@string/app_name"
+            android:theme="@style/AppTheme.NoActionBar">
+
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+
         </activity>
 
-        <activity
-            android:name=".chat.ChatActivity"
-            android:label="@string/app_name"
-            android:theme="@style/AppTheme.NoActionBar"/>
+        <meta-data
+            android:name="io.fabric.ApiKey"
+            android:value="2bb567abe7a7c6ac3ea8e3ea84c5415c53792427" />
 
     </application>
 
